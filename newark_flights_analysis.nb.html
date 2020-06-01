@@ -1755,41 +1755,63 @@ summary {
 <p>They also want to understand how they compare to other New York airports.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGdncGxvdDIpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)
-library(ggplot2)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShoZXJlKVxuXG5gYGAifQ== -->
+<pre class="r"><code>library(here)
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaGVyZSgpIHN0YXJ0cyBhdCAvVXNlcnMvdXNlci9uZXdhcmtfZmxpZ2h0c19hbmFseXNpc1xuIn0= -->
+<pre><code>here() starts at /Users/user/newark_flights_analysis</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmxpZ2h0cyA8LSByZWFkX2NzdihcImRhdGEvZmxpZ2h0cy5jc3ZcIilcblxuYWlybGluZXMgPC0gcmVhZF9jc3YoXCJkYXRhL2FpcmxpbmVzLmNzdlwiKVxuXG5haXJwb3J0cyA8LSByZWFkX2NzdihcImRhdGEvYWlycG9ydHMuY3N2XCIpXG5cbnBsYW5lcyA8LSByZWFkX2NzdihcImRhdGEvcGxhbmVzLmNzdlwiKVxuXG53ZWF0aGVyIDwtIHJlYWRfY3N2KFwiZGF0YS93ZWF0aGVyLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>flights &lt;- read_csv(&quot;data/flights.csv&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmxpZ2h0cyA8LSByZWFkX2NzdihoZXJlKFwicmF3X2RhdGEvZmxpZ2h0cy5jc3ZcIikpXG5cbmFpcmxpbmVzIDwtIHJlYWRfY3N2KGhlcmUoXCJyYXdfZGF0YS9haXJsaW5lcy5jc3ZcIikpXG5cbmFpcnBvcnRzIDwtIHJlYWRfY3N2KGhlcmUoXCJyYXdfZGF0YS9haXJwb3J0cy5jc3ZcIikpXG5cbnBsYW5lcyA8LSByZWFkX2NzdihoZXJlKFwicmF3X2RhdGEvcGxhbmVzLmNzdlwiKSlcblxud2VhdGhlciA8LSByZWFkX2NzdihoZXJlKFwicmF3X2RhdGEvd2VhdGhlci5jc3ZcIikpXG5gYGAifQ== -->
+<pre class="r"><code>flights &lt;- read_csv(here(&quot;raw_data/flights.csv&quot;))
 
-airlines &lt;- read_csv(&quot;data/airlines.csv&quot;)
+airlines &lt;- read_csv(here(&quot;raw_data/airlines.csv&quot;))
 
-airports &lt;- read_csv(&quot;data/airports.csv&quot;)
+airports &lt;- read_csv(here(&quot;raw_data/airports.csv&quot;))
 
-planes &lt;- read_csv(&quot;data/planes.csv&quot;)
+planes &lt;- read_csv(here(&quot;raw_data/planes.csv&quot;))
 
-weather &lt;- read_csv(&quot;data/weather.csv&quot;)</code></pre>
+weather &lt;- read_csv(here(&quot;raw_data/weather.csv&quot;))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Visualising the data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShmbGlnaHRzKVxuZGltKGZsaWdodHMpXG5cbnN1bW1hcnkoYWlybGluZXMpXG5cbnN1bW1hcnkoYWlycG9ydHMpXG5cbnN1bW1hcnkocGxhbmVzKVxuXG5zdW1tYXJ5KHdlYXRoZXIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShmbGlnaHRzKVxuXG5gYGAifQ== -->
 <pre class="r"><code>summary(flights)
-dim(flights)
-
-summary(airlines)
-
-summary(airports)
-
-summary(planes)
-
-summary(weather)</code></pre>
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgeWVhciAgICAgICAgICBtb250aCAgICAgICAgICAgICBkYXkgICAgICAgICAgIGRlcF90aW1lICAgIHNjaGVkX2RlcF90aW1lICAgZGVwX2RlbGF5ICAgICAgICAgIGFycl90aW1lICAgXG4gTWluLiAgIDoyMDE3ICAgTWluLiAgIDogMS4wMDAgICBNaW4uICAgOiAxLjAwICAgTWluLiAgIDogICAxICAgTWluLiAgIDogMTExICAgTWluLiAgIDogLTg0LjAwICAgTWluLiAgIDogICAxICBcbiAxc3QgUXUuOjIwMTcgICAxc3QgUXUuOiA0LjAwMCAgIDFzdCBRdS46IDguMDAgICAxc3QgUXUuOiA5MDUgICAxc3QgUXUuOiA5MTAgICAxc3QgUXUuOiAgLTYuMDAgICAxc3QgUXUuOjEwNTIgIFxuIE1lZGlhbiA6MjAxNyAgIE1lZGlhbiA6IDcuMDAwICAgTWVkaWFuIDoxNi4wMCAgIE1lZGlhbiA6MTM0OCAgIE1lZGlhbiA6MTM1MCAgIE1lZGlhbiA6ICAtMi4wMCAgIE1lZGlhbiA6MTUwNiAgXG4gTWVhbiAgIDoyMDE3ICAgTWVhbiAgIDogNi41MjkgICBNZWFuICAgOjE1Ljc2ICAgTWVhbiAgIDoxMzQ3ICAgTWVhbiAgIDoxMzQ3ICAgTWVhbiAgIDogIDE1LjE5ICAgTWVhbiAgIDoxNDczICBcbiAzcmQgUXUuOjIwMTcgICAzcmQgUXUuOiA5LjAwMCAgIDNyZCBRdS46MjMuMDAgICAzcmQgUXUuOjE3NTcgICAzcmQgUXUuOjE3NDUgICAzcmQgUXUuOiAgMTIuMDAgICAzcmQgUXUuOjE5MzkgIFxuIE1heC4gICA6MjAxNyAgIE1heC4gICA6MTIuMDAwICAgTWF4LiAgIDozMS4wMCAgIE1heC4gICA6MjQwMCAgIE1heC4gICA6MjM1OSAgIE1heC4gICA6MTU0OC4wMCAgIE1heC4gICA6MjQwMCAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDo3ODEwICAgICAgICAgICAgICAgICAgTkEncyAgIDo3ODE0ICAgICAgTkEncyAgIDo4MTQ4ICBcbiBzY2hlZF9hcnJfdGltZSAgIGFycl9kZWxheSAgICAgICAgICBjYXJyaWVyICAgICAgICAgICAgICBmbGlnaHQgICAgICAgdGFpbG51bSAgICAgICAgICAgICBvcmlnaW4gICAgICAgICBcbiBNaW4uICAgOiAgIDEgICBNaW4uICAgOiAtOTguMDAwICAgTGVuZ3RoOjMwMzc0OCAgICAgIE1pbi4gICA6ICAgMSAgIExlbmd0aDozMDM3NDggICAgICBMZW5ndGg6MzAzNzQ4ICAgICBcbiAxc3QgUXUuOjExMTkgICAxc3QgUXUuOiAtMjAuMDAwICAgQ2xhc3MgOmNoYXJhY3RlciAgIDFzdCBRdS46IDUxOSAgIENsYXNzIDpjaGFyYWN0ZXIgICBDbGFzcyA6Y2hhcmFjdGVyICBcbiBNZWRpYW4gOjE1NDAgICBNZWRpYW4gOiAgLTcuMDAwICAgTW9kZSAgOmNoYXJhY3RlciAgIE1lZGlhbiA6MTM0NSAgIE1vZGUgIDpjaGFyYWN0ZXIgICBNb2RlICA6Y2hhcmFjdGVyICBcbiBNZWFuICAgOjE1MjMgICBNZWFuICAgOiAgIDcuMTA0ICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6MTY5OSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAzcmQgUXUuOjE5NTQgICAzcmQgUXUuOiAgMTMuMDAwICAgICAgICAgICAgICAgICAgICAgIDNyZCBRdS46MjIzOCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiBNYXguICAgOjIzNTkgICBNYXguICAgOjE1ODkuMDAwICAgICAgICAgICAgICAgICAgICAgIE1heC4gICA6Njk4OCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICBOQSdzICAgOjg4NTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgZGVzdCAgICAgICAgICAgICAgYWlyX3RpbWUgICAgICAgIGRpc3RhbmNlICAgICAgICAgaG91ciAgICAgICAgICBtaW51dGUgICAgICAgIHRpbWVfaG91ciAgICAgICAgICAgICAgICAgIFxuIExlbmd0aDozMDM3NDggICAgICBNaW4uICAgOiAyMC4wICAgTWluLiAgIDogIDkzICAgTWluLiAgIDogMS4wICAgTWluLiAgIDogMC4wMCAgIE1pbi4gICA6MjAxNy0wMS0wMSAwNTowMDowMCAgXG4gQ2xhc3MgOmNoYXJhY3RlciAgIDFzdCBRdS46IDk5LjAgICAxc3QgUXUuOiA2MzYgICAxc3QgUXUuOiA5LjAgICAxc3QgUXUuOiA3LjAwICAgMXN0IFF1LjoyMDE3LTA0LTA0IDA3OjQ1OjAwICBcbiBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDoxMzkuMCAgIE1lZGlhbiA6MTAwNSAgIE1lZGlhbiA6MTMuMCAgIE1lZGlhbiA6MjkuMDAgICBNZWRpYW4gOjIwMTctMDctMDIgMTY6MDA6MDAgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjE2NC41ICAgTWVhbiAgIDoxMTU0ICAgTWVhbiAgIDoxMy4yICAgTWVhbiAgIDoyNi41OCAgIE1lYW4gICA6MjAxNy0wNy0wMiAxNjoxNjowMiAgXG4gICAgICAgICAgICAgICAgICAgIDNyZCBRdS46MjExLjAgICAzcmQgUXUuOjE1OTggICAzcmQgUXUuOjE3LjAgICAzcmQgUXUuOjQ1LjAwICAgM3JkIFF1LjoyMDE3LTA5LTI5IDE4OjAwOjAwICBcbiAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo3MTIuMCAgIE1heC4gICA6NDk4MyAgIE1heC4gICA6MjMuMCAgIE1heC4gICA6NTkuMDAgICBNYXguICAgOjIwMTctMTItMzEgMjM6MDA6MDAgIFxuICAgICAgICAgICAgICAgICAgICBOQSdzICAgOjg4NTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<pre><code>      year          month             day           dep_time    sched_dep_time   dep_delay          arr_time   
+ Min.   :2017   Min.   : 1.000   Min.   : 1.00   Min.   :   1   Min.   : 111   Min.   : -84.00   Min.   :   1  
+ 1st Qu.:2017   1st Qu.: 4.000   1st Qu.: 8.00   1st Qu.: 905   1st Qu.: 910   1st Qu.:  -6.00   1st Qu.:1052  
+ Median :2017   Median : 7.000   Median :16.00   Median :1348   Median :1350   Median :  -2.00   Median :1506  
+ Mean   :2017   Mean   : 6.529   Mean   :15.76   Mean   :1347   Mean   :1347   Mean   :  15.19   Mean   :1473  
+ 3rd Qu.:2017   3rd Qu.: 9.000   3rd Qu.:23.00   3rd Qu.:1757   3rd Qu.:1745   3rd Qu.:  12.00   3rd Qu.:1939  
+ Max.   :2017   Max.   :12.000   Max.   :31.00   Max.   :2400   Max.   :2359   Max.   :1548.00   Max.   :2400  
+                                                 NA's   :7810                  NA's   :7814      NA's   :8148  
+ sched_arr_time   arr_delay          carrier              flight       tailnum             origin         
+ Min.   :   1   Min.   : -98.000   Length:303748      Min.   :   1   Length:303748      Length:303748     
+ 1st Qu.:1119   1st Qu.: -20.000   Class :character   1st Qu.: 519   Class :character   Class :character  
+ Median :1540   Median :  -7.000   Mode  :character   Median :1345   Mode  :character   Mode  :character  
+ Mean   :1523   Mean   :   7.104                      Mean   :1699                                        
+ 3rd Qu.:1954   3rd Qu.:  13.000                      3rd Qu.:2238                                        
+ Max.   :2359   Max.   :1589.000                      Max.   :6988                                        
+                NA's   :8852                                                                              
+     dest              air_time        distance         hour          minute        time_hour                  
+ Length:303748      Min.   : 20.0   Min.   :  93   Min.   : 1.0   Min.   : 0.00   Min.   :2017-01-01 05:00:00  
+ Class :character   1st Qu.: 99.0   1st Qu.: 636   1st Qu.: 9.0   1st Qu.: 7.00   1st Qu.:2017-04-04 07:45:00  
+ Mode  :character   Median :139.0   Median :1005   Median :13.0   Median :29.00   Median :2017-07-02 16:00:00  
+                    Mean   :164.5   Mean   :1154   Mean   :13.2   Mean   :26.58   Mean   :2017-07-02 16:16:02  
+                    3rd Qu.:211.0   3rd Qu.:1598   3rd Qu.:17.0   3rd Qu.:45.00   3rd Qu.:2017-09-29 18:00:00  
+                    Max.   :712.0   Max.   :4983   Max.   :23.0   Max.   :59.00   Max.   :2017-12-31 23:00:00  
+                    NA's   :8852                                                                               </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Befor starting any sort of analysis let us first think about how an airport operates:</p>
@@ -1805,53 +1827,88 @@ summary(weather)</code></pre>
 <p>Exploring temp / dewp / humi</p>
 <p>There is a lot of missing information</p>
 <p>However let us first filter relevant information. Firstly, lets pull out weather of Newark and then store it in a tibble names weather_newark Now, weather_newark has 8753 rows out of which only 204 rows have information 97.6% info is NA’s More importantly the readings are taken at different hours of the day, so its obvious that conditions will change during morning / afternoon / evening / night. Hence there is a feeling that taking a mean or median of the missing data will not make sence and we will be forced to drop these three variables in our study.</p>
+<p>Creating a seperate data set called newark_waether from the weather data set</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX3dlYXRoZXIgPC0gd2VhdGhlciAlPiVcbiAgZmlsdGVyKG9yaWdpbiA9PSBcIkVXUlwiKVxuXG5WaWV3KG5ld2Fya193ZWF0aGVyKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX3dlYXRoZXIgPC0gd2VhdGhlciAlPiVcbiAgZmlsdGVyKG9yaWdpbiA9PSBcIkVXUlwiKVxuXG5zdW1tYXJ5KG5ld2Fya193ZWF0aGVyKVxuXG5gYGAifQ== -->
 <pre class="r"><code>newark_weather &lt;- weather %&gt;%
   filter(origin == &quot;EWR&quot;)
 
-View(newark_weather)</code></pre>
+summary(newark_weather)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIG9yaWdpbiAgICAgICAgICAgICAgIHllYXIgICAgICAgICAgbW9udGggICAgICAgICAgICAgZGF5ICAgICAgICAgICAgIGhvdXIgICAgICAgICAgIHRlbXAgICAgICAgICAgICBkZXdwICAgICBcbiBMZW5ndGg6ODczNSAgICAgICAgTWluLiAgIDoyMDE3ICAgTWluLiAgIDogMS4wMDAgICBNaW4uICAgOiAxLjAwICAgTWluLiAgIDogMC4wICAgTWluLiAgIDozMi4wMCAgIE1pbi4gICA6IDcuMCAgXG4gQ2xhc3MgOmNoYXJhY3RlciAgIDFzdCBRdS46MjAxNyAgIDFzdCBRdS46IDQuMDAwICAgMXN0IFF1LjogOC4wMCAgIDFzdCBRdS46IDYuMCAgIDFzdCBRdS46NTAuMDAgICAxc3QgUXUuOjMyLjAgIFxuIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjIwMTcgICBNZWRpYW4gOiA3LjAwMCAgIE1lZGlhbiA6MTYuMDAgICBNZWRpYW4gOjEyLjAgICBNZWRpYW4gOjYxLjU1ICAgTWVkaWFuIDo0Ni45ICBcbiAgICAgICAgICAgICAgICAgICAgTWVhbiAgIDoyMDE3ICAgTWVhbiAgIDogNi41MTEgICBNZWFuICAgOjE1LjY4ICAgTWVhbiAgIDoxMS41ICAgTWVhbiAgIDo2MC41MSAgIE1lYW4gICA6NDMuNCAgXG4gICAgICAgICAgICAgICAgICAgIDNyZCBRdS46MjAxNyAgIDNyZCBRdS46IDkuNTAwICAgM3JkIFF1LjoyMy4wMCAgIDNyZCBRdS46MTcuNSAgIDNyZCBRdS46NzAuMDAgICAzcmQgUXUuOjU0LjAgIFxuICAgICAgICAgICAgICAgICAgICBNYXguICAgOjIwMTcgICBNYXguICAgOjEyLjAwMCAgIE1heC4gICA6MzEuMDAgICBNYXguICAgOjIzLjAgICBNYXguICAgOjkxLjAwICAgTWF4LiAgIDo3My45ICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDo4NTMxICAgIE5BJ3MgICA6ODUzMSAgXG4gICAgIGh1bWlkICAgICAgICAgICB3aW5kX2RpciAgICAgICB3aW5kX3NwZWVkICAgICAgIHdpbmRfZ3VzdCAgICAgICAgICBwcmVjaXAgICAgICAgICBwcmVzc3VyZSAgICAgICAgdmlzaWIgICAgICAgXG4gTWluLiAgIDogMTEuNzYgICBNaW4uICAgOiAgMC4wICAgTWluLiAgIDogMC4wMDAgICBNaW4uICAgOiAwLjAwMCAgIE1pbi4gICA6MC4wMDAgICBNaW4uICAgOjEwMDcgICBNaW4uICAgOiAwLjEzMCAgXG4gMXN0IFF1LjogMzYuODMgICAxc3QgUXUuOiA3MC4wICAgMXN0IFF1LjogNS43NTQgICAxc3QgUXUuOiA2LjYyMiAgIDFzdCBRdS46MC4wMDAgICAxc3QgUXUuOjEwMTMgICAxc3QgUXUuOjEwLjAwMCAgXG4gTWVkaWFuIDogNjAuNzUgICBNZWRpYW4gOjIxMC4wICAgTWVkaWFuIDogOC4wNTYgICBNZWRpYW4gOiA5LjI3MCAgIE1lZGlhbiA6MC4wMTAgICBNZWRpYW4gOjEwMTYgICBNZWRpYW4gOjEwLjAwMCAgXG4gTWVhbiAgIDogNTkuNDggICBNZWFuICAgOjE4Mi43ICAgTWVhbiAgIDogOC45MjkgICBNZWFuICAgOjEwLjI3NSAgIE1lYW4gICA6MC4wMTggICBNZWFuICAgOjEwMTYgICBNZWFuICAgOiA5LjMzOCAgXG4gM3JkIFF1LjogODQuMzQgICAzcmQgUXUuOjI3MC4wICAgM3JkIFF1LjoxMS41MDggICAzcmQgUXUuOjEzLjI0MyAgIDNyZCBRdS46MC4wMjAgICAzcmQgUXUuOjEwMTggICAzcmQgUXUuOjEwLjAwMCAgXG4gTWF4LiAgIDoxMDAuMDAgICBNYXguICAgOjM2MC4wICAgTWF4LiAgIDozOS4xMjcgICBNYXguICAgOjQ1LjAyNiAgIE1heC4gICA6MC4yOTAgICBNYXguICAgOjEwMzcgICBNYXguICAgOjEwLjAwMCAgXG4gTkEncyAgIDo4NTMxICAgICBOQSdzICAgOjYyOSAgICAgTkEncyAgIDo2MTcgICAgICBOQSdzICAgOjYxNyAgICAgIE5BJ3MgICA6ODI2NiAgICBOQSdzICAgOjg1NjQgICBOQSdzICAgOjMgICAgICAgXG4gICB0aW1lX2hvdXIgICAgICAgICAgICAgICAgICBcbiBNaW4uICAgOjIwMTctMDEtMDEgMDg6MDA6MDAgIFxuIDFzdCBRdS46MjAxNy0wNC0wMiAwNzozMDowMCAgXG4gTWVkaWFuIDoyMDE3LTA3LTAyIDA3OjAwOjAwICBcbiBNZWFuICAgOjIwMTctMDctMDIgMDc6MDk6MTMgIFxuIDNyZCBRdS46MjAxNy0xMC0wMSAwNjozMDowMCAgXG4gTWF4LiAgIDoyMDE3LTEyLTMxIDA3OjAwOjAwICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code>    origin               year          month             day             hour           temp            dewp     
+ Length:8735        Min.   :2017   Min.   : 1.000   Min.   : 1.00   Min.   : 0.0   Min.   :32.00   Min.   : 7.0  
+ Class :character   1st Qu.:2017   1st Qu.: 4.000   1st Qu.: 8.00   1st Qu.: 6.0   1st Qu.:50.00   1st Qu.:32.0  
+ Mode  :character   Median :2017   Median : 7.000   Median :16.00   Median :12.0   Median :61.55   Median :46.9  
+                    Mean   :2017   Mean   : 6.511   Mean   :15.68   Mean   :11.5   Mean   :60.51   Mean   :43.4  
+                    3rd Qu.:2017   3rd Qu.: 9.500   3rd Qu.:23.00   3rd Qu.:17.5   3rd Qu.:70.00   3rd Qu.:54.0  
+                    Max.   :2017   Max.   :12.000   Max.   :31.00   Max.   :23.0   Max.   :91.00   Max.   :73.9  
+                                                                                   NA's   :8531    NA's   :8531  
+     humid           wind_dir       wind_speed       wind_gust          precip         pressure        visib       
+ Min.   : 11.76   Min.   :  0.0   Min.   : 0.000   Min.   : 0.000   Min.   :0.000   Min.   :1007   Min.   : 0.130  
+ 1st Qu.: 36.83   1st Qu.: 70.0   1st Qu.: 5.754   1st Qu.: 6.622   1st Qu.:0.000   1st Qu.:1013   1st Qu.:10.000  
+ Median : 60.75   Median :210.0   Median : 8.056   Median : 9.270   Median :0.010   Median :1016   Median :10.000  
+ Mean   : 59.48   Mean   :182.7   Mean   : 8.929   Mean   :10.275   Mean   :0.018   Mean   :1016   Mean   : 9.338  
+ 3rd Qu.: 84.34   3rd Qu.:270.0   3rd Qu.:11.508   3rd Qu.:13.243   3rd Qu.:0.020   3rd Qu.:1018   3rd Qu.:10.000  
+ Max.   :100.00   Max.   :360.0   Max.   :39.127   Max.   :45.026   Max.   :0.290   Max.   :1037   Max.   :10.000  
+ NA's   :8531     NA's   :629     NA's   :617      NA's   :617      NA's   :8266    NA's   :8564   NA's   :3       
+   time_hour                  
+ Min.   :2017-01-01 08:00:00  
+ 1st Qu.:2017-04-02 07:30:00  
+ Median :2017-07-02 07:00:00  
+ Mean   :2017-07-02 07:09:13  
+ 3rd Qu.:2017-10-01 06:30:00  
+ Max.   :2017-12-31 07:00:00  
+                              </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhuZXdhcmtfd2VhdGhlcilcbmBgYCJ9 -->
+<pre class="r"><code>View(newark_weather)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>So What do we have here : 26201 rows of information , lots of missing info in temp / dewp/ humid / precip / pressure Important columns for us Visibility and we have hardly any NA’s ( Only 11 which is great news) Also Wind_speed / wind_direction / wind_gust , lesser amount of NA’s.. guess we can extract some valuable details there as well.</p>
-<p>Like we created a new tibble for newark_weather lets now create a new tibble for newark_flights</p>
+<p>Creating a new tibble for flights flying out of Newarch Airport named as newark_flights</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX2ZsaWdodHMgPC0gZmxpZ2h0cyU+JVxuICBmaWx0ZXIgKCBvcmlnaW4gPT0gXCJFV1JcIilcblxuc3VtbWFyeShuZXdhcmtfZmxpZ2h0cylcbmRpbShuZXdhcmtfZmxpZ2h0cylcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX2ZsaWdodHMgPC0gZmxpZ2h0cyU+JVxuICBmaWx0ZXIgKCBvcmlnaW4gPT0gXCJFV1JcIikgJT4lXG4gIHNlbGVjdCh0aW1lX2hvdXIsZGVwX2RlbGF5LGFycl9kZWxheSxjYXJyaWVyLGZsaWdodCx0YWlsbnVtLGFpcl90aW1lLGRpc3RhbmNlKSAlPiVcbiAgZHJvcF9uYSgpXG5cbnN1bW1hcnkobmV3YXJrX2ZsaWdodHMpXG5gYGAifQ== -->
 <pre class="r"><code>newark_flights &lt;- flights%&gt;%
-  filter ( origin == &quot;EWR&quot;)
+  filter ( origin == &quot;EWR&quot;) %&gt;%
+  select(time_hour,dep_delay,arr_delay,carrier,flight,tailnum,air_time,distance) %&gt;%
+  drop_na()
 
-summary(newark_flights)
-dim(newark_flights)
-</code></pre>
+summary(newark_flights)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgdGltZV9ob3VyICAgICAgICAgICAgICAgICAgICAgZGVwX2RlbGF5ICAgICAgICAgYXJyX2RlbGF5ICAgICAgICAgIGNhcnJpZXIgICAgICAgICAgICAgIGZsaWdodCAgICBcbiBNaW4uICAgOjIwMTctMDEtMDEgMDU6MDA6MDAgICBNaW4uICAgOiAtMjUuMDAgICBNaW4uICAgOiAtNzguMDAwICAgTGVuZ3RoOjExMjcwMiAgICAgIE1pbi4gICA6ICAgNSAgXG4gMXN0IFF1LjoyMDE3LTA0LTA2IDE5OjAwOjAwICAgMXN0IFF1LjogIC02LjAwICAgMXN0IFF1LjogLTE4LjAwMCAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOiA4NzYgIFxuIE1lZGlhbiA6MjAxNy0wNy0wNCAxODowMDowMCAgIE1lZGlhbiA6ICAtMi4wMCAgIE1lZGlhbiA6ICAtNi4wMDAgICBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDoxNTk4ICBcbiBNZWFuICAgOjIwMTctMDctMDQgMDc6MzE6MDcgICBNZWFuICAgOiAgMTUuNTEgICBNZWFuICAgOiAgIDkuMTI5ICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6MTkxOCAgXG4gM3JkIFF1LjoyMDE3LTEwLTAyIDE0OjQ1OjAwICAgM3JkIFF1LjogIDE0LjAwICAgM3JkIFF1LjogIDE2LjAwMCAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjI0MTQgIFxuIE1heC4gICA6MjAxNy0xMi0zMSAyMjowMDowMCAgIE1heC4gICA6MTIxNy4wMCAgIE1heC4gICA6MTIxOS4wMDAgICAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo2ODk5ICBcbiAgIHRhaWxudW0gICAgICAgICAgICAgYWlyX3RpbWUgICAgICAgIGRpc3RhbmNlICAgXG4gTGVuZ3RoOjExMjcwMiAgICAgIE1pbi4gICA6IDIwLjAgICBNaW4uICAgOiAgOTMgIFxuIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOiA5Ny4wICAgMXN0IFF1LjogNjI4ICBcbiBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDoxMzYuMCAgIE1lZGlhbiA6IDkzNyAgXG4gICAgICAgICAgICAgICAgICAgIE1lYW4gICA6MTYxLjYgICBNZWFuICAgOjExNDMgIFxuICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjIwOC4wICAgM3JkIFF1LjoxNTY5ICBcbiAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo2OTYuMCAgIE1heC4gICA6NDk2MiAgXG4ifQ== -->
+<pre><code>   time_hour                     dep_delay         arr_delay          carrier              flight    
+ Min.   :2017-01-01 05:00:00   Min.   : -25.00   Min.   : -78.000   Length:112702      Min.   :   5  
+ 1st Qu.:2017-04-06 19:00:00   1st Qu.:  -6.00   1st Qu.: -18.000   Class :character   1st Qu.: 876  
+ Median :2017-07-04 18:00:00   Median :  -2.00   Median :  -6.000   Mode  :character   Median :1598  
+ Mean   :2017-07-04 07:31:07   Mean   :  15.51   Mean   :   9.129                      Mean   :1918  
+ 3rd Qu.:2017-10-02 14:45:00   3rd Qu.:  14.00   3rd Qu.:  16.000                      3rd Qu.:2414  
+ Max.   :2017-12-31 22:00:00   Max.   :1217.00   Max.   :1219.000                      Max.   :6899  
+   tailnum             air_time        distance   
+ Length:112702      Min.   : 20.0   Min.   :  93  
+ Class :character   1st Qu.: 97.0   1st Qu.: 628  
+ Mode  :character   Median :136.0   Median : 937  
+                    Mean   :161.6   Mean   :1143  
+                    3rd Qu.:208.0   3rd Qu.:1569  
+                    Max.   :696.0   Max.   :4962  </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Let us now join these two tibbles to create a new tibble having all relevant information we need</p>
+<div id="plot-and-check" class="section level1">
+<h1>Plot and check</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkYnBseXIpXG5cbm5ld2Fya19kYXRhIDwtIGxlZnRfam9pbihuZXdhcmtfZmxpZ2h0cywgbmV3YXJrX3dlYXRoZXIsIFwidGltZV9ob3VyXCIpICU+JVxuICBzZWxlY3QodGltZV9ob3VyLCBkZXBfZGVsYXksIGFycl9kZWxheSwgY2FycmllciwgZmxpZ2h0LHRhaWxudW0sIGFpcl90aW1lLCBkaXN0YW5jZSx0ZW1wLCBkZXdwLCBodW1pZCwgd2luZF9kaXIsIHdpbmRfc3BlZWQsIHdpbmRfZ3VzdCwgcHJlY2lwLCBwcmVzc3VyZSwgdmlzaWIpXG5cblZpZXcobmV3YXJrX2RhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>library(dbplyr)
-
-newark_data &lt;- left_join(newark_flights, newark_weather, &quot;time_hour&quot;) %&gt;%
-  select(time_hour, dep_delay, arr_delay, carrier, flight,tailnum, air_time, distance,temp, dewp, humid, wind_dir, wind_speed, wind_gust, precip, pressure, visib)
-
-View(newark_data)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Lets plot this and see if we can find any relation between flights delayed and influencing factors from weather ( Visibility)</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX2RhdGFfZGVsYXllZCA8LSBuZXdhcmtfZGF0YSAlPiVcbiAgZmlsdGVyKGRlcF9kZWxheSAgPiBcIjBcIikgIyBmaWx0ZXJpbmcgZmxpZ2h0cyB3aGljaCB3ZXJlIGRlbGF5ZWRcbiAgXG5zdW1tYXJ5KG5ld2Fya19kYXRhX2RlbGF5ZWQpXG5nZ3Bsb3QoYWVzKHggPSBkZXBfZGVsYXksIHkgPSB2aXNpYikpICtcbiAgZ2VvbV9wb2ludCgpXG5cbmBgYCJ9 -->
-<pre class="r"><code>newark_data_delayed &lt;- newark_data %&gt;%
-  filter(dep_delay  &gt; &quot;0&quot;) # filtering flights which were delayed
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBuZXdhcmtfZGF0YV9kZWxheWVkIDwtIG5ld2Fya19kYXRhICU+JVxuIyAgZmlsdGVyKGRlcF9kZWxheSAgPiBcIjBcIikgIyBmaWx0ZXJpbmcgZmxpZ2h0cyB3aGljaCB3ZXJlIGRlbGF5ZWRcbiAgXG4jc3VtbWFyeShuZXdhcmtfZGF0YV9kZWxheWVkKVxuI2dncGxvdChhZXMoeCA9IGRlcF9kZWxheSwgeSA9IHZpc2liKSkgK1xuIyAgZ2VvbV9wb2ludCgpXG5cbmBgYCJ9 -->
+<pre class="r"><code># newark_data_delayed &lt;- newark_data %&gt;%
+#  filter(dep_delay  &gt; &quot;0&quot;) # filtering flights which were delayed
   
-summary(newark_data_delayed)
-ggplot(aes(x = dep_delay, y = visib)) +
-  geom_point()
+#summary(newark_data_delayed)
+#ggplot(aes(x = dep_delay, y = visib)) +
+#  geom_point()
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1859,17 +1916,163 @@ ggplot(aes(x = dep_delay, y = visib)) +
 <p>( Temperature)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX2RhdGEgJT4lXG4gIGZpbHRlcihkZXBfZGVsYXkgID4gXCIwXCIpICU+JSAjIGZpbHRlcmluZyBmbGlnaHRzIHdoaWNoIHdlcmUgZGVsYXllZFxuZ2dwbG90KGFlcyh4ID0gZGVwX2RlbGF5LCB5ID0gdGVtcCkpICtcbiAgZ2VvbV9wb2ludCgpXG5gYGAifQ== -->
-<pre class="r"><code>newark_data %&gt;%
-  filter(dep_delay  &gt; &quot;0&quot;) %&gt;% # filtering flights which were delayed
-ggplot(aes(x = dep_delay, y = temp)) +
-  geom_point()</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI25ld2Fya19kYXRhICU+JVxuIyAgZmlsdGVyKGRlcF9kZWxheSAgPiBcIjBcIikgJT4lICMgZmlsdGVyaW5nIGZsaWdodHMgd2hpY2ggd2VyZSBkZWxheWVkXG4jZ2dwbG90KGFlcyh4ID0gZGVwX2RlbGF5LCB5ID0gdGVtcCkpICtcbiMgIGdlb21fcG9pbnQoKVxuYGBgIn0= -->
+<pre class="r"><code>#newark_data %&gt;%
+#  filter(dep_delay  &gt; &quot;0&quot;) %&gt;% # filtering flights which were delayed
+#ggplot(aes(x = dep_delay, y = temp)) +
+#  geom_point()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Package Reim holds global weather data and can help us with a lot of missing values in our weather data set</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zdGFsbC5wYWNrYWdlcyhcInJpZW1cIilcbmBgYCJ9 -->
+<pre class="r"><code>install.packages(&quot;riem&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gaW5zdGFsbC5wYWNrYWdlcyA6IFVwZGF0aW5nIGxvYWRlZCBwYWNrYWdlc1xuIn0= -->
+<pre><code>Error in install.packages : Updating loaded packages</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyaWVtKVxuYGBgIn0= -->
+<pre class="r"><code>library(riem)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Using the library reim to bring in weather data for the Newarch Airport, lots of data especially temperature, humidity and dewpoint</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmllbV9uZXR3b3JrcygpXG5gYGAifQ== -->
+<pre class="r"><code>riem_networks()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MjY3fSwicmRmIjoiSDRzSUFBQUFBQUFBQTNWYVNYUGJSaFptSER1eXVHaXg0c2xXVTRXYVZLcG1EdlljNXBJckFhNGlRZEVFU0ZtNnBKcGtpMndUUkRNTlFEUjFtajg5MTJSZWMvSHdmZENrVXJMNjlmYmU5NzYzTkVxRDJzZC9GVDhXQzRYQzE0V3Z2M2xSK1BvVi9WcDROUXdiNzM0dEZGNitvTUZYaFplRlUvdnZaMXAwUmI5WTRRV05TL3VKMTlYNmI3OVZnNXZneTdnQjR5YU0yMng4VXUzdzZTNU1kL20wRDZmMVlId0Q0dzh3SHNEeEF6NGR3UElReGtNWTM3THh5K3J0MGR3OVhIWFB0cnBWZnBUcndyZ0dZOERaQlp4ZHdObHR3YmdONDJzWUE3SXVJT2tPWUF4UXVRQ1Zld3ZqT3hoemVJcGU5YmVxeXdDekVyN0E5VkRpdXlqcDVTV05uQ1RJU2NLY1pJaVNteDVLK25XVWZNaHBHSFJRY3NmdWV1MkJvejF3ckFlTzljQ3hIampXNjhDNEMyTnd0QWNoNUhISG45Q1lUVU1FZVdBTlJJZzNnakhRd09NMGVGM2pORCtwMWZrMHNMWUd4dGJBdUJxd3VBYlgxVDBZUTVUVkFmdzZzTDRPckcrQU14cWdiNFByZTlMZzZhMEI2amNnNkpvOGFadzBxM3dhY2tnVHFOVUU2NXBBdFNaUXF3bldOSUZLVFZDM0NWUnFRdlp0b2ptQVhoUEkwNFFjMHVUa09XbTEyWFFMeU5BQ2RWcHdmUXV1Yi9IclQ5b2MzWFlOcG10OEdzQnRReVZyYzFlM2V6RGQ0OU5BM0RaQTJRWmIya0RNTnRoMkRhNjZodk92KzN6Y0FXczZRSTBPVUtNRDUzY0ErdzZlRDJta0UvQnA4SHdIUEU5ak5nMWgzWVU0NlhKUGRpRk91cEFGdWtDa0xvRGRCYkM3QUhZWGVOeUZKTmlGSk9pRHVqNVgxd2YxZkNDaVgrTkRuako5U0dGK0MzYnpJUExCZGg5aTN2ZGhlNDhQZWJYd3dlMCt1TjBQK0pBWEV4OXc5QUZISDFqaWY0UXg0Z3cwNlVFUDF1TkFuL1E4UHVRQjM0TlMxZU80OXlDNTlwcXd2TVdub1MvdVhmTnB5Q1k5bjA5RE9QZjZzSHpFaHl4OFRtNWFmTWhiOGh2dytBM3ZtZnRBM2o0bmJ4OFNTUjlnNlFNOSs1Qm8rc0RIUHZDeEQ0bW1EN0hhaDlqc0F5YytnUG9ESGc0REFIWUFvVDhBaWc2QWtnRlFMSURVRXdEbEFvOVBRNmdIbklJQmdCc0FtQUdBR1VEV0RnRGNBTUFOQU53QTBBZ0E3QURBRGlCZ0F3QS9nSUFNb1dFSndaNFE3QW1odlFxaENvVlFaRU5lWkVNd0p3UnpRakFudklYalB2SnBzR1lJdmgrQ05VUFFic2l6M3hEQUdzS0Rjc1FEYlFSVllnVGNHTUh0SStEQ0NMUVpjVzFHMEJ6ZFZ2bVFoODF0QUt0NS9ybmw1ZnNPVkwwRDNPOEJ5SHR3OC8zQkwvemJ4QS9EV0tWeTZsU05HRHYxcFRJaWxZbHp0UEdpK2pDYmkxZ2xxWWlQNWQ5WDQxVE5NdUdJZU9xNHdveXpxVGllcjFUaldhYWlpQWxMMVVna0N5WXFWNk14SFk4eU1SWkxrSm1saEhVLzlHUTZseVlpRlVobjBpZUt1UElsVWtKekZjNXBuVENUVkUyWStLeHFacEpPaU1FSXN4QnhJdGloVjlXbE5MUTlkZ0t4MUtCa2xxUkd3Y2xXSmlJdUxWWk5ObWFTMDdaZWsrRDJTTk1uYWNaQ2ZlTEFFeERxU1hNOWYzSjFZckd4dm1oSjh5Um4raEZOc1Q0U1U4MU1PWGRGUEl2RVZDWnpkb1VybzVuS2xzZXlTemN6QzN0bVF5U2FINXhGTXdGR2wxMHhOMEp4eGVtRUxKNHFCb05MUG9WVjBpeUJTMlZYUitxUjMxQnlqWGhTRVY1S3JPRU1jT2NaTUxmaTZqUlppMWlneWNKa3NGZEc2a2x5OWtSamFWTGhlRlVtOXNpL0Q5b0FQNzkzalVvVllldnBLRnVPRlc2NzhJbjVxUjZqL0cxUHJoMlh3RXJXYXJLQXlXOXA4a0VUa0piMk1IZlYwNC9DQ1NZNnpkMzExNTQyNlh3dGs5UUpwU0c5dEZFVUxMZy9pOFZqbGpvZXdjTjljSDVqNDBacDJPSDBqWW9uMHFsUDE4Sk1uWGF5MHlxMy9leERKc2R5Z3JZRU5oMmtrN2trZjhEYzVWMjIwUEV6Ui8xU2swczlvVVNsSnM1QXJySnhSTC9vQjRkU0FRRk5BYy9NOWlpcUtmcWM2c011WnIvc09HWmhidHRGc0ZicDB5NjFNSG43VVpzTlhTTUl4Mk5sUGEwWGUrc1RmdlJjUll4Q0ZVOVEvdEE2eG1VUXI4UVp2ZVVNQ2cxRk1TZWZwdVRzRENDalhaQlJzYlNKTG1PcW5ucVFlSWk4SyttTXBKa3lQVXZlWmdVQmNlVTl5Y244V1FqTFRRcGJFVytZdGpXS0thSUZONy8yU1kxMWxySTBVSzdKZUNuTWdpL1VTeFdEVWQ4ZGhNODdrZ3JIVEdJcXFrOHlRc3h3V1pKcUNOWmlmYlpaTWFTS3dRcFNXS1dlenBWZXdRVU5GU05QVGh2cUU3UHdiVU5FaSsycVowaFNicEJYRldmNXp3MDVsYllhVDUwZzNSWmxvcml2SmtiSE1vRlUyRERDeHVDeDZrMHg1Z3dqQjJrejR4dmZOSTBVcVdPekZPWnFtc0c0Kzh2aGhMOTdsSDVTcy9rSGc2WkJPNGdjelV4UnhINVJZdzU1OXF5cHhoU09sRXE0MUVpWkE3SFVGQmdBSlRvK2xseXQrdStac05tTWdqdy9XN0luYzJ6T21yUmVMZ1h2QzA1SnV1VGdiQTk3NTZva0VSa29zUUd6U2kwaXVtSWVQMnRSVW5FNjlzY3hUQ1NkWm9ZWHFiSm50RWlCamkyaElFaGFXVXlGbG9YWXZtazR1clVkVC9NTUtiYW5ZczZTUnJsdFpBN3ZkbUtFWkNXMTBvNGlGV3ZGY3hyZEFTR3dsWEJJZmo0VXY5MmNjek9SOVBOUWU4QUtJMzVIQWVkamU1SlR0OWhPUmNUT0tWOVQrWWVNVWJyV1pzb1BLMTZMRlVnNk10NUFwaVh1YVRDejBsRkdqUVc0eGROTGJYaGY5V05BOFpRNkhaV215YllwNjhsSGptRnBXNDZKSGhTQlgyb09wY1c5aUMzdDVGclFVaWNqdXZFSzFEUzd5cnRaUXJ0RHRxWFpaTUdRT3UrSUo3R1lZMVAvdWlzWVM4NjZPbE1KZXJiY2xkU3k4L1J5c2JPNG0wMmcrdzJNY3JvaWhxYS9xOGE1UE4yVmlVN25jTDlLNXhrK0Q4NjcyV2RKM3NrTUM2MVNWNlRRSkJicEh1N1hzaysrbWt6WUxXOThRU0UrbVdlSnRQNDZQdEtuUnBzdnBnT2lxZTJ5amlIMktTeHo5UFFKRWQ0OCtwUlJaeUtaOE9UM2xuWW5jeEZGejVXR0NxWDh1WnB4TjUzNVlpS25XTUJPZldwQ3VhcVVwcGFRYVgxRlhRRUJEUVpRa2lNODJmWmR4eWhON1BpMnZTY09QS01mMlpUWjhnRzZYTmdEN2YrckZhaWtxWTJFa3JBN1FtVmd1SWltNmhIZWN5UVVhOFZGOHJQaUxySmJ4UVpTNExtdm4ydzUrVDFqUGluM3hGSkJrWGxqMjIvcTZQTVFYKzJpMWhPR0hpVGNpc3ZkVkUwc0FOdGlUMUZQd3ZUclNhcUI4QTYrc0pmZVM0RTBLbSszUDZOZ1N5eFh5Vnp4N3Vxc1IrblBDUHN1UDdiZHJyK1dKcEVidVBMbytRekw4N0RhbExVV0cyNmJYSW1JTDVLUDBEZFU3SEYzbW5kM3B6ZlVTTEZWTjlRZXpUVi85Si9lUURJcjNSaDYyM0pSbi9qRXQxMzJaUndubStnUmFYbmFsNGFWOHJmN3JxV3ZvMDJ1YXI3dGl4VUJhZFhQTnhZWGZXcnNMYjFqVHRGS1h5eHlIMHRLZEQ3NHRkSlg2VVFvdzdOb1A2UFhwYmE5UEFlblQrVEtaaHhxdW1ucmFlNlJEd0o2cTh2QlhGTm52MytaSFROclFHZ0RRRDhHMG96M0h4SnNxTXBZemd4VDVidEJsdGlLNE96N1V3WGVHTkJManZ2L01oQ1pmZlViQVhIMmJXQ2ZPTFQvdWJ3U3lBMDlDL0dEenRXdVJqNFhnTVVnZ3pwL3VWdWNEOGxTc0NibGVVb05GRFZYSzgzRDZYSlgxVm95a3ZBNkN5TDlpSitqdGtMeVBsaXZxT1VSVGxkcVhnM0tnUVdYdTdRY2tFc2lQSld5SXpGY2NqOVJvUTQxQ2EybnRtOXd0V0lyTHVxUkV3Z0tBWGo2RklNTmZxQUsxdlpMQ3I1Z3ZMbmdnbER6TjNJbG5JdmN0dk5RZkZMNUFMZ01NN093Mys5d29oeG1zWUs0T3d1bHJWR0o1RStha0ZwcDdrWjdLRTlwMzRjRUJiMmtwbHRjUWowV1hPZFNLTlFhZXI5UWZ1YmRWU1VVOFZQdW0rUndZYkNnbDRZekpQdmZodkVpMXV2WSthZmpSZFJXcUFkRkx6aWZVa1dLcmZzd0ZmeXIyOUJrR003bnc2ZXh6TU5aR1NsNmlZR0d2K3pJT3JMZlkraGZDNEQ5SkxKN3lXR2FPaHNSKzU0eXlSOUJQeDE2OXQzNXp3WG0xZitmSXExazZ2VDRNNm84a29aaVBPVXlFZE1iakdYaTgxdEIxU3llcFR5Zm5OMnFaS0xqaEQ5UGk3a3ZyMjl1N1pldDUyQXAzMjdzTndQV0toYnY1SkxIZjlrWEc1Mm1FUDNiL0xIN2NzVDhmcDk3bUZidTFYSXN4dXY5QWZ3dkExL1o4RTBLMnkvdmhSZDc0Y3NKcGVYRDczWUJiRG8xZXYzK3NMRmlOLzZiZnZ6NTV4Ly93ZE1ubG1qNzB3L0M0cFRxd1BzSHN6MjM4QWRzT2RFcm03aHAwd3Y3QjR1dllQTlhCZ1FYV1d3MW1iNmpKamxldlB2MVYzdkRkbjczWDJYMysxZWwvLzF1L3dyUzN2bml6LzFaci9abmZTTmo4dEhCOGxlUkdNdm80R3d5ZVd2eCt4V0ZjWG93aGFUSis1UnkrR0ZkY2FLamcyUnJYT0dQL3dLSUVKOXJxQ2tBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["code"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"AE__ASOS","2":"United Arab Emirates ASOS"},{"1":"AF__ASOS","2":"Afghanistan ASOS"},{"1":"AG__ASOS","2":"Antigua and Barbuda ASOS"},{"1":"AI__ASOS","2":"Anguilla ASOS"},{"1":"AK_ASOS","2":"Alaska ASOS"},{"1":"AL__ASOS","2":"Albania ASOS"},{"1":"AL_ASOS","2":"Alabama ASOS"},{"1":"AM__ASOS","2":"Armenia ASOS"},{"1":"AN__ASOS","2":"Netherlands Antilles ASOS"},{"1":"AO__ASOS","2":"Angola ASOS"},{"1":"AQ__ASOS","2":"Antarctica ASOS"},{"1":"AR__ASOS","2":"Argentina ASOS"},{"1":"AR_ASOS","2":"Arkansas ASOS"},{"1":"AS__ASOS","2":"American Samoa ASOS"},{"1":"AT__ASOS","2":"Austria ASOS"},{"1":"AU__ASOS","2":"Australia ASOS"},{"1":"AW__ASOS","2":"Aruba ASOS"},{"1":"AWOS","2":"Iowa AWOS"},{"1":"AZ__ASOS","2":"Azerbaijan ASOS"},{"1":"AZ_ASOS","2":"Arizona ASOS"},{"1":"BA__ASOS","2":"Bosnia and Herzegovina ASOS"},{"1":"BB__ASOS","2":"Barbados ASOS"},{"1":"BD__ASOS","2":"Bangladesh ASOS"},{"1":"BE__ASOS","2":"Belgium ASOS"},{"1":"BF__ASOS","2":"Burkina Faso ASOS"},{"1":"BG__ASOS","2":"Bulgaria ASOS"},{"1":"BH__ASOS","2":"Bahrain ASOS"},{"1":"BI__ASOS","2":"Burundi ASOS"},{"1":"BJ__ASOS","2":"Benin ASOS"},{"1":"BM__ASOS","2":"Bermuda ASOS"},{"1":"BO__ASOS","2":"Bolivia ASOS"},{"1":"BR__ASOS","2":"Brazil ASOS"},{"1":"BS__ASOS","2":"Bahamas ASOS"},{"1":"BT__ASOS","2":"Bhutan ASOS"},{"1":"BW__ASOS","2":"Botswana ASOS"},{"1":"BY__ASOS","2":"Belarus ASOS"},{"1":"BZ__ASOS","2":"Belize ASOS"},{"1":"CA_AB_ASOS","2":"Alberta CA ASOS"},{"1":"CA_ASOS","2":"California ASOS"},{"1":"CA_BC_ASOS","2":"British Columbia CA ASOS"},{"1":"CA_MB_ASOS","2":"Manitoba CA ASOS"},{"1":"CA_NB_ASOS","2":"New Brunswick CA ASOS"},{"1":"CA_NF_ASOS","2":"Newfoundland CA ASOS"},{"1":"CA_NS_ASOS","2":"Nova Scotia CA ASOS"},{"1":"CA_NT_ASOS","2":"Northwest Territories CA ASOS"},{"1":"CA_NU_ASOS","2":"Nunavut Canada ASOS"},{"1":"CA_ON_ASOS","2":"Ontario CA ASOS"},{"1":"CA_PE_ASOS","2":"Prince Edward Island Canada ASOS"},{"1":"CA_QC_ASOS","2":"Quebec CA ASOS"},{"1":"CA_SK_ASOS","2":"Saskatchewan CA ASOS"},{"1":"CA_YT_ASOS","2":"Yukon Canada ASOS"},{"1":"CD__ASOS","2":"Democratic Republic of the Congo ASOS"},{"1":"CF__ASOS","2":"Central African Republic ASOS"},{"1":"CG__ASOS","2":"Congo ASOS"},{"1":"CH__ASOS","2":"Switzerland ASOS"},{"1":"CI__ASOS","2":"Ivory Coast ASOS"},{"1":"CK__ASOS","2":"Cook Islands ASOS"},{"1":"CL__ASOS","2":"Chile ASOS"},{"1":"CM__ASOS","2":"Cameroon ASOS"},{"1":"CN__ASOS","2":"China ASOS"},{"1":"CO__ASOS","2":"Colombia ASOS"},{"1":"CO_ASOS","2":"Colorado ASOS"},{"1":"CR__ASOS","2":"Costa Rica ASOS"},{"1":"CT_ASOS","2":"Connecticut ASOS"},{"1":"CU__ASOS","2":"Cuba ASOS"},{"1":"CV__ASOS","2":"Cape Verde ASOS"},{"1":"CY__ASOS","2":"Cyprus ASOS"},{"1":"CZ__ASOS","2":"Czech Republic ASOS"},{"1":"DE__ASOS","2":"Germany ASOS"},{"1":"DE_ASOS","2":"Delaware ASOS"},{"1":"DJ__ASOS","2":"Djibouti ASOS"},{"1":"DK__ASOS","2":"Denmark ASOS"},{"1":"DM__ASOS","2":"Dominica ASOS"},{"1":"DO__ASOS","2":"Dominican Republic ASOS"},{"1":"DZ__ASOS","2":"Algeria ASOS"},{"1":"EC__ASOS","2":"Ecuador ASOS"},{"1":"EE__ASOS","2":"Estonia ASOS"},{"1":"EG__ASOS","2":"Egypt ASOS"},{"1":"ES__ASOS","2":"Spain ASOS"},{"1":"ET__ASOS","2":"Ethiopia ASOS"},{"1":"FI__ASOS","2":"Finland ASOS"},{"1":"FJ__ASOS","2":"Fiji ASOS"},{"1":"FK__ASOS","2":"Falkland Islands ASOS"},{"1":"FL_ASOS","2":"Florida ASOS"},{"1":"FM__ASOS","2":"Federated States of Micronesia ASOS"},{"1":"FR__ASOS","2":"France ASOS"},{"1":"GA__ASOS","2":"Gabon ASOS"},{"1":"GA_ASOS","2":"Georgia ASOS"},{"1":"GB__ASOS","2":"Great Britain ASOS"},{"1":"GD__ASOS","2":"Grenada ASOS"},{"1":"GE__ASOS","2":"Georgia (Country) ASOS"},{"1":"GF__ASOS","2":"French Guiana"},{"1":"GH__ASOS","2":"Ghana ASOS"},{"1":"GI__ASOS","2":"Gibraltar ASOS"},{"1":"GL__ASOS","2":"Greenland ASOS"},{"1":"GM__ASOS","2":"Gambia ASOS"},{"1":"GN__ASOS","2":"Guinea ASOS"},{"1":"GQ__ASOS","2":"Equatorial Guinea ASOS"},{"1":"GR__ASOS","2":"Greece ASOS"},{"1":"GT__ASOS","2":"Guatemala ASOS"},{"1":"GU__ASOS","2":"Guam ASOS"},{"1":"GW__ASOS","2":"Guinea-Bissau ASOS"},{"1":"GY__ASOS","2":"Guyana ASOS"},{"1":"HI_ASOS","2":"Hawaii ASOS"},{"1":"HK__ASOS","2":"Hong Kong ASOS"},{"1":"HN__ASOS","2":"Honduras ASOS"},{"1":"HR__ASOS","2":"Croatia ASOS"},{"1":"HT__ASOS","2":"Haiti ASOS"},{"1":"HU__ASOS","2":"Hungary ASOS"},{"1":"IA_ASOS","2":"Iowa ASOS"},{"1":"ID__ASOS","2":"Indonesia ASOS"},{"1":"ID_ASOS","2":"Idaho ASOS"},{"1":"IE__ASOS","2":"Ireland ASOS"},{"1":"IL__ASOS","2":"Israel ASOS"},{"1":"IL_ASOS","2":"Illinois ASOS"},{"1":"IN__ASOS","2":"India ASOS"},{"1":"IN_ASOS","2":"Indiana ASOS"},{"1":"IO__ASOS","2":"British Indian Ocean Territory ASOS"},{"1":"IQ__ASOS","2":"Iraq ASOS"},{"1":"IR__ASOS","2":"Iran ASOS"},{"1":"IS__ASOS","2":"Iceland ASOS"},{"1":"IT__ASOS","2":"Italy ASOS"},{"1":"JM__ASOS","2":"Jamaica ASOS"},{"1":"JO__ASOS","2":"Jordan ASOS"},{"1":"JP__ASOS","2":"Japan ASOS"},{"1":"KE__ASOS","2":"Kenya ASOS"},{"1":"KH__ASOS","2":"Cambodia ASOS"},{"1":"KI__ASOS","2":"Kiribati ASOS"},{"1":"KM__ASOS","2":"Comoros ASOS"},{"1":"KN__ASOS","2":"Saint Kitts and Nevis ASOS"},{"1":"KP__ASOS","2":"North Korea"},{"1":"KR__ASOS","2":"South Korea ASOS"},{"1":"KS_ASOS","2":"Kansas ASOS"},{"1":"KW__ASOS","2":"Kuwait ASOS"},{"1":"KY__ASOS","2":"Grand Cayman ASOS"},{"1":"KY_ASOS","2":"Kentucky ASOS"},{"1":"KZ__ASOS","2":"Kazakhstan ASOS"},{"1":"LA__ASOS","2":"Lao ASOS"},{"1":"LA_ASOS","2":"Louisiana ASOS"},{"1":"LB__ASOS","2":"Lebanon ASOS"},{"1":"LC__ASOS","2":"Saint Lucia ASOS"},{"1":"LK__ASOS","2":"Sri Lanka ASOS"},{"1":"LR__ASOS","2":"Liberia ASOS"},{"1":"LS__ASOS","2":"Lesotho ASOS"},{"1":"LT__ASOS","2":"Lithuania ASOS"},{"1":"LU__ASOS","2":"Luxembourg ASOS"},{"1":"LV__ASOS","2":"Latvia ASOS"},{"1":"LY__ASOS","2":"Libya ASOS"},{"1":"MA__ASOS","2":"Morocco ASOS"},{"1":"MA_ASOS","2":"Massachusetts ASOS"},{"1":"MC__ASOS","2":"Monaco ASOS"},{"1":"MD__ASOS","2":"Moldova ASOS"},{"1":"MD_ASOS","2":"Maryland ASOS"},{"1":"ME_ASOS","2":"Maine ASOS"},{"1":"MG__ASOS","2":"Madagascar ASOS"},{"1":"MH__ASOS","2":"Marshall Islands ASOS"},{"1":"MI_ASOS","2":"Michigan ASOS"},{"1":"MK__ASOS","2":"Macedonia ASOS"},{"1":"ML__ASOS","2":"Mali ASOS"},{"1":"MM__ASOS","2":"Myanmar ASOS"},{"1":"MN_ASOS","2":"Minnesota ASOS"},{"1":"MO_ASOS","2":"Missouri ASOS"},{"1":"MP__ASOS","2":"Northern Mariana Islands ASOS"},{"1":"MR__ASOS","2":"Mauritania ASOS"},{"1":"MS_ASOS","2":"Mississippi ASOS"},{"1":"MT_ASOS","2":"Montana ASOS"},{"1":"MU__ASOS","2":"Mauritius ASOS"},{"1":"MV__ASOS","2":"Maldives ASOS"},{"1":"MW__ASOS","2":"Malawi ASOS"},{"1":"MX__ASOS","2":"Mexico ASOS"},{"1":"MY__ASOS","2":"Malaysia ASOS"},{"1":"MZ__ASOS","2":"Mozambique ASOS"},{"1":"NA__ASOS","2":"Namibia ASOS"},{"1":"NC__ASOS","2":"New Caledonia ASOS"},{"1":"NC_ASOS","2":"North Carolina ASOS"},{"1":"ND_ASOS","2":"North Dakota ASOS"},{"1":"NE__ASOS","2":"Niger ASOS"},{"1":"NE_ASOS","2":"Nebraska ASOS"},{"1":"NF__ASOS","2":"New Zealand ASOS"},{"1":"NG__ASOS","2":"Nigeria ASOS"},{"1":"NH_ASOS","2":"New Hampshire ASOS"},{"1":"NI__ASOS","2":"Nicaragua ASOS"},{"1":"NJ_ASOS","2":"New Jersey ASOS"},{"1":"NL__ASOS","2":"Netherlands ASOS"},{"1":"NM_ASOS","2":"New Mexico ASOS"},{"1":"NO__ASOS","2":"Norway ASOS"},{"1":"NP__ASOS","2":"Nepal ASOS"},{"1":"NV_ASOS","2":"Nevada ASOS"},{"1":"NY_ASOS","2":"New York ASOS"},{"1":"OH_ASOS","2":"Ohio ASOS"},{"1":"OK_ASOS","2":"Oklahoma ASOS"},{"1":"OM__ASOS","2":"Oman ASOS"},{"1":"OR_ASOS","2":"Oregon ASOS"},{"1":"PA__ASOS","2":"Panama ASOS"},{"1":"PA_ASOS","2":"Pennsylvania ASOS"},{"1":"PE__ASOS","2":"Peru ASOS"},{"1":"PF__ASOS","2":"French Polynesia ASOS"},{"1":"PG__ASOS","2":"Papua New Guinea ASOS"},{"1":"PH__ASOS","2":"Philippines ASOS"},{"1":"PK__ASOS","2":"Pakistan ASOS"},{"1":"PL__ASOS","2":"Poland ASOS"},{"1":"PN__ASOS","2":"Pitcairn ASOS"},{"1":"PR__ASOS","2":"Puerto Rico ASOS"},{"1":"PT__ASOS","2":"Portugal ASOS"},{"1":"PY__ASOS","2":"Paraguay ASOS"},{"1":"QA__ASOS","2":"Qatar ASOS"},{"1":"RI_ASOS","2":"Rhode Island ASOS"},{"1":"RO__ASOS","2":"Romania ASOS"},{"1":"RS__ASOS","2":"Serbia and Montenegro ASOS"},{"1":"RU__ASOS","2":"Russian Federation ASOS"},{"1":"RW__ASOS","2":"Rwanda ASOS"},{"1":"SA__ASOS","2":"Saudi Arabia ASOS"},{"1":"SB__ASOS","2":"Solomon Islands ASOS"},{"1":"SC__ASOS","2":"Seychelles ASOS"},{"1":"SC_ASOS","2":"South Carolina ASOS"},{"1":"SD__ASOS","2":"Sudan ASOS"},{"1":"SD_ASOS","2":"South Dakota ASOS"},{"1":"SE__ASOS","2":"Sweden ASOS"},{"1":"SG__ASOS","2":"Singapore ASOS"},{"1":"SH__ASOS","2":"Saint Helena ASOS"},{"1":"SI__ASOS","2":"Slovenia ASOS"},{"1":"SK__ASOS","2":"Slovakia ASOS"},{"1":"SL__ASOS","2":"Sierra Leone ASOS"},{"1":"SN__ASOS","2":"Senegal ASOS"},{"1":"SO__ASOS","2":"Somalia ASOS"},{"1":"SR__ASOS","2":"Suriname ASOS"},{"1":"ST__ASOS","2":"Sao Tome and Principe ASOS"},{"1":"SV__ASOS","2":"El Salvador ASOS"},{"1":"SY__ASOS","2":"Syria ASOS"},{"1":"SZ__ASOS","2":"Swaziland ASOS"},{"1":"TD__ASOS","2":"Chad ASOS"},{"1":"TG__ASOS","2":"Togo ASOS"},{"1":"TH__ASOS","2":"Thailand ASOS"},{"1":"TJ__ASOS","2":"Tajikistan ASOS"},{"1":"TM__ASOS","2":"Turkmenistan ASOS"},{"1":"TN__ASOS","2":"Tunisia ASOS"},{"1":"TN_ASOS","2":"Tennessee ASOS"},{"1":"TO__ASOS","2":"Tonga ASOS"},{"1":"TR__ASOS","2":"Turkey ASOS"},{"1":"TT__ASOS","2":"Trinidad and Tobago ASOS"},{"1":"TW__ASOS","2":"Taiwan ASOS"},{"1":"TX_ASOS","2":"Texas ASOS"},{"1":"TZ__ASOS","2":"Tanzania ASOS"},{"1":"UA__ASOS","2":"Ukraine ASOS"},{"1":"UG__ASOS","2":"Uganda ASOS"},{"1":"UN__ASOS","2":"Unknown / Classified Military ASOS"},{"1":"UT_ASOS","2":"Utah ASOS"},{"1":"UY__ASOS","2":"Uruguay ASOS"},{"1":"UZ__ASOS","2":"Uzbekistan ASOS"},{"1":"VA_ASOS","2":"Virginia ASOS"},{"1":"VC__ASOS","2":"Saint Vincent and the Grenadines ASOS"},{"1":"VE__ASOS","2":"Venezuela ASOS"},{"1":"VG__ASOS","2":"British Virgin Islands ASOS"},{"1":"VI__ASOS","2":"Virgin Islands ASOS"},{"1":"VN__ASOS","2":"Viet Nam ASOS"},{"1":"VT_ASOS","2":"Vermont ASOS"},{"1":"VU__ASOS","2":"Vanuatu ASOS"},{"1":"WA_ASOS","2":"Washington ASOS"},{"1":"WI_ASOS","2":"Wisconsin ASOS"},{"1":"WS__ASOS","2":"Samoa ASOS"},{"1":"WV_ASOS","2":"West Virginia ASOS"},{"1":"WY_ASOS","2":"Wyoming ASOS"},{"1":"YE__ASOS","2":"Yemen ASOS"},{"1":"YT__ASOS","2":"Mayotte ASOS"},{"1":"ZA__ASOS","2":"South Africa ASOS"},{"1":"ZM__ASOS","2":"Zambia ASOS"},{"1":"ZW__ASOS","2":"Zimbabwe ASOS"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[267]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmllbV9zdGF0aW9ucyhcIk5KX0FTT1NcIilcbmBgYCJ9 -->
+<pre class="r"><code>riem_stations(&quot;NJ_ASOS&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NCwibnJvdyI6MTd9LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFVV1dnVFVSU2RackVhaVZvTDdzcElVYXlTMUFXeGlPSzh6SHZScWJQWU81Tk9xcmlrVGRSZ09vbHB0RzZJVlN2dVlzWDFveWd1RmNFTlJWUUVCMEg4RVB5ekNwWHFsejhxQ29LSVF1dE1PaS9xQkY1eTV0eDd6NzNuTWkrQTQvTUM4UURETUY3R084VERlUDBXWlB3eExScXFaUmlmeDNvb1kzek1NUHQzbTVWVWFRR2ZkVVpacDhJSmVPZk1sU2xFZkNPRkVWR2lrTWM2aFRJUktSUnhIWVU2Q0JSS1FrTUpTakVLaVE0VXFsSTloUTJvMUMycWwyYlFTS1NrVUJjdnNWb3BRZGV4eXdLTFpLdzBFS2hCQkpTb1NPSWhoMkNSQUNzVTBKeTgwVWdUa2F3SlBNc0xXaU1yeUJwMU16SkNSQWxCS0lwQXdrZ2t0SUJISXRhSktOWVFWU1Z4bGxmQ1RpUW9vdVZrV1F4VWpaV1I2cEJEeExTUlRCbk8wM0NKWHhvVGdMQW9TaDFWU29Jb05saUhzRkpNRm5oaEJTcE5JQ2tBZ3FvcHVseU0wUXFaNkFpV0YyZDF1Um12S2hLQlFiVVpPbEpadFM3Q3N2TDh1ZFZPd21SVmlXbkwyRG9DS21sa2dTd1ZGQm01VlVhb01kdmEydi9aQ28xb0JDSUtLSzcwZ0padGFXVWh2VFdWcHp2U2dNaWFJdGRZdy9EV3l2L3VhSVF1V050VEZEd0Q2WXBhYlRPMnRBbTNwNTMvc2l0bndwVnZLM1BIKzB3NFdQK3BZOHBERXpvbmQ5KzUxMm5DbVV0SGVwcTJtWENpMnpEeVYweTQybmVxNjJhUENjKzlxMTZQL216Q2hXTUxQM2IwbW5DNHArclk1V2NtM0hnN29lLzZXUk1lc05FWHlWc21kSDhJVHR5ODFZUjk1OWhKcjM5WnVnLzBKZTAvVExpL1lOM1QxZHROZUR4MTNPNWQ1WFFlRHJkWHlZOHV0WEg4NDVPL2wxeDd6K0d4Z2NXNXkyODRuQXNkblVsa0R2dkl5eWV6VG5OWUdicTNZMDhmaDh2NkQreGJ0STdqYjcyN0cxMXppTVByNjhlL0tsL0xZYjE1VGFHNnk4cnJ2WGgxK2htTy8zbW42OXk3WGc2ZnY3aHovc3o5SEc3NTN0VDBzcHZqZnp4RXY2VktEbGNaUFcyNUhSemZQcVkzK0hhMjY4TDZqVVJMcXRWNTAzME82VWtuSGVTencvUktaTEpHQ1NZS0xxRmgrV3hibUlvRmJaRTkxdGZBd01CWGQ4Zm1US0tWZHFSa0lKa29KTUxyODNZM2h1bDNsWlJuYzRWMDFyQ0tQUFovaTk5VlhKWjNFYU8yR1BZa3lWRHp4aTNHcGxCdHJkMmhHQi84QkIxYzhRLzJEZmIwRERoYWZucmJVc2FHdEVGMzRNOGttbElaK3VaWmxvdU93N2w4MmloUUt4YmJHaTVrQ3dtYUYyak9aaWhUTk1mMC93SHNrc29ZVXdVQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["lon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lat"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"12N","2":"ANDOVER/AEROFLEX-ANDOVER AIRPORT","3":"-74.73667","4":"41.00889"},{"1":"ACY","2":"ATLANTIC CITY INTL","3":"-74.57717","4":"39.45758"},{"1":"BLM","2":"BELMAR-FARMDALE","3":"-74.13000","4":"40.18000"},{"1":"CDW","2":"CALDWELL/ESSEX CO.","3":"-74.28306","4":"40.87639"},{"1":"NEL","2":"LAKEHURST NAS","3":"-74.35361","4":"40.03338"},{"1":"LDJ","2":"Linden","3":"-74.24459","4":"40.61745"},{"1":"WRI","2":"MCGUIRE AFB","3":"-74.59171","4":"40.01558"},{"1":"MIV","2":"MILLVILLE MUNICIPAL","3":"-75.07833","4":"39.36611"},{"1":"MMU","2":"MORRISTOWN MUNI","3":"-74.41487","4":"40.79935"},{"1":"EWR","2":"NEWARK INTL AIRPORT","3":"-74.16932","4":"40.68272"},{"1":"SMQ","2":"SOMERVILLE (WAS SJB  N52)","3":"-74.66944","4":"40.62389"},{"1":"VAY","2":"SOUTH JERSEY REGIONAL AIRPORT","3":"-74.84572","4":"39.94289"},{"1":"FWN","2":"SUSSEX_AIRPORT","3":"-74.62305","4":"41.20021"},{"1":"TEB","2":"TETERBORO AIRPORT","3":"-74.05616","4":"40.85899"},{"1":"MJX","2":"Toms River","3":"-74.29238","4":"39.92750"},{"1":"TTN","2":"TRENTON/MERCER CO.","3":"-74.81588","4":"40.27682"},{"1":"WWD","2":"WILDWOOD(AWOS)","3":"-74.90827","4":"39.00851"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[17]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2VhdGhlcl9uZXcgPC0gcmllbV9tZWFzdXJlcyhcIkVXUlwiLCBkYXRlX3N0YXJ0ID0gXCIyMDE3LTAxLTAxXCIsIGRhdGVfZW5kID0gXCIyMDE3LTEyLTMxXCIpXG5cblZpZXcod2VhdGhlcl9uZXcpXG5cbndyaXRlX2Nzdih3ZWF0aGVyX25ldywncmF3X2RhdGEvd2VhdGhlcl9uZXcuY3N2JylcblxuYGBgIn0= -->
+<pre class="r"><code>weather_new &lt;- riem_measures(&quot;EWR&quot;, date_start = &quot;2017-01-01&quot;, date_end = &quot;2017-12-31&quot;)
+
+View(weather_new)
+
+write_csv(weather_new,'raw_data/weather_new.csv')
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Cleaning the data and filtering relevant information</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKHdlYXRoZXJfcmVwbGFjaW5nX25hKVxuXG5gYGAifQ== -->
+<pre class="r"><code>dim(weather_replacing_na)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDExMTc2OSAgICAgIDRcbiJ9 -->
+<pre><code>[1] 111769      4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now lets join this new weather’s data to the original weather dataset by using an inner_join() : returns all rows from two tables with matching records</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2VhdGhlcl9uZXdhcmtfY2xlYW4gPC0gaW5uZXJfam9pbihuZXdhcmtfd2VhdGhlciwgd2VhdGhlcl9yZXBsYWNpbmdfbmEsIFwidGltZV9ob3VyXCIpXG5cblZpZXcod2VhdGhlcl9uZXdhcmtfY2xlYW4pXG5gYGAifQ== -->
+<pre class="r"><code>weather_newark_clean &lt;- inner_join(newark_weather, weather_replacing_na, &quot;time_hour&quot;)
+
+View(weather_newark_clean)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2VhdGhlcl9uZXdhcmQgPC0gd2VhdGhlcl9uZXdhcmtfY2xlYW4gJT4lXG4gIHJlbmFtZSh0ZW1wID0gdGVtcC55ICwgZGV3cCA9IGRld3AueSwgaHVtaWQgPSBodW1pZC55KSAlPiVcbiAgc2VsZWN0KCAtdGVtcC54LCAtZGV3cC54LCAtaHVtaWQueClcblxuc3VtbWFyeSh3ZWF0aGVyX25ld2FyZClcbmBgYCJ9 -->
+<pre class="r"><code>weather_neward &lt;- weather_newark_clean %&gt;%
+  rename(temp = temp.y , dewp = dewp.y, humid = humid.y) %&gt;%
+  select( -temp.x, -dewp.x, -humid.x)
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQlVTSU5FU1MgUVVFU1RJT04gOgoKWW91IGhhdmUgYmVlbiBoaXJlZCBieSBOZXdhcmsgYWlycG9ydCB0byBpbnZlc3RpZ2F0ZSB0aGUgZWZmZWN0IG9mIHdlYXRoZXIgb24gYWVyb3BsYW5lIGRlcGFydHVyZSBkZWxheXMuCgpUaGV5IGJlbGlldmUgcG9vciB3ZWF0aGVyIGNvbmRpdGlvbnMgYXJlIGNhdXNpbmcgdG9vIG1hbnkgZGVsYXlzIGFuZCB3YW50IHRvIGludmVzdCBpbiBpbXByb3ZpbmcgZmFjaWxpdGllcywgc28gdGhhdCBhaXJjcmFmdCBjYW4gdGFrZSBvZmYgaW4gbW9yZSB0eXBlcyBvZiB3ZWF0aGVyLiBIb3dldmVyLCB0aGV5IGRvIG5vdCBmdWxseSB1bmRlcnN0YW5kIGhvdyBzZXJpb3VzIHdlYXRoZXIgcmVsYXRlZCBkZWxheXMgYXJlLCBhbmQgYXJlIG5vdCBzdXJlIHdoYXQgdHlwZSBvZiB3ZWF0aGVyIHRoZXkgc2hvdWxkIGJlIG1vc3QgY29uY2VybmVkIGFib3V0LiBBcyBwYXJ0IG9mIGludmVzdGlnYXRpbmcgdGhlIGVmZmVjdCBvZiB3ZWF0aGVyIHlvdSBzaG91bGQgaW52ZXN0aWdhdGUgb3RoZXIgZmFjdG9ycyB0byB1bmRlcnN0YW5kIGhvdyBpbXBvcnRhbnQgd2VhdGhlciBpcyBpbiBjb21wYXJpc29uIHRvIHRoZW0uCgpUaGV5IGFsc28gd2FudCB0byB1bmRlcnN0YW5kIGhvdyB0aGV5IGNvbXBhcmUgdG8gb3RoZXIgTmV3IFlvcmsgYWlycG9ydHMuCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShnZ3Bsb3QyKQpgYGAKCmBgYHtyfQpmbGlnaHRzIDwtIHJlYWRfY3N2KCJkYXRhL2ZsaWdodHMuY3N2IikKCmFpcmxpbmVzIDwtIHJlYWRfY3N2KCJkYXRhL2FpcmxpbmVzLmNzdiIpCgphaXJwb3J0cyA8LSByZWFkX2NzdigiZGF0YS9haXJwb3J0cy5jc3YiKQoKcGxhbmVzIDwtIHJlYWRfY3N2KCJkYXRhL3BsYW5lcy5jc3YiKQoKd2VhdGhlciA8LSByZWFkX2NzdigiZGF0YS93ZWF0aGVyLmNzdiIpCmBgYAoKYGBge3J9CnN1bW1hcnkoZmxpZ2h0cykKZGltKGZsaWdodHMpCgpzdW1tYXJ5KGFpcmxpbmVzKQoKc3VtbWFyeShhaXJwb3J0cykKCnN1bW1hcnkocGxhbmVzKQoKc3VtbWFyeSh3ZWF0aGVyKQpgYGAKQmVmb3Igc3RhcnRpbmcgYW55IHNvcnQgb2YgYW5hbHlzaXMgbGV0IHVzIGZpcnN0IHRoaW5rIGFib3V0IGhvdyBhbiBhaXJwb3J0IG9wZXJhdGVzOgoKTm8gZmxpZ2h0cyBhcmUgYWx3YXlzIHN0YXRpb25hcnkgYXQgdGhlIGFpcnBvcnQsIHRoZXkgYXJyaXZlIGZyb20gc29tZXdoZXJlLgoKSW4gb3VyIGRhdGEgc2V0cyB3ZSBoYXZlIHNjaGVkdWxlZCBhcnJpdmFsIHRpbWUgLyBhY3R1YWwgYXJyaXZhbCB0aW1lIGFuZCBpZiB0aGVyZSB3YXMgYW55IGRlbGF5IGluIHRoZSBmbGlnaHRzLgpXaGF0IGlzIGltcG9ydGFudCB0byB1cyBhcmUgdGhlIGZsaWdodHMgd2hpY2ggd2VyZSBkZWxheWVkLiggV2UgbmVlZCB0byBjaGVjayBpZiB0aGVyZSB3YXMgYW55IHJlbGF0aW9uc2hpcCBiZXR3ZWVuIHdlYXRoZXIgY29uZGl0aW9ucyBhdCB0aGUgdGltZSBvZiBhcnJpdmFsIGFuZCB0aGUgZmxpZ2h0cyB3aGVyZSBpbiB0aGVyZSB3YXMgYSBkZWxheSBpbiBhcnJpdmFsKQpTbyB3ZSBoYXZlIDMgb3V0Y29tZXMgaGVyZSAtIEFycml2ZWQgTGF0ZSAvIEFycml2ZWQgb24gdGltZSAvIEFycml2ZWQgYmVmb3JlIHRpbWUgCgpQYXJ0IDIgb2YgdGhpcyBzdHVkeSBpcyB0aGUgdGltZSB0YWtlbiBmb3IgcHJlcCBvZiB0aGUgYWlyY3JhZnQgCgpBZ2FpbiB3ZSBjYW4gbG9vayBhdCBkaWZmZXJlbnQgb3V0Y29tZXMgOgoKQXJyaXZlZCBMZXRlIC0gdGltZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggSW50ZXJlc3RlZCApCkFycml2ZWQgbGF0ZSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBPbiB0aW1lIGRlcGFydHVyZSAoIEV4Y2VsbGVudCAtIEJ1dCBub3QgbXVjaCBpbnRlcmVzdCB0byB0aGUgc3R1ZHkpCkFycml2ZWQgbGF0ZSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBlYXJseSBkZXBhcnR1cmUgKCBFeGNlbGxlbnQgLSBCdXQgbm90IG11Y2ggaW50ZXJlc3QgdG8gdGhlIHN0dWR5KQoKQXJyaXZlZCBvbiB0aW1lIC0gdG9tZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggVmVyeSBJbnRlcmVzdGVkICkKQXJyaXZlZCBvbiB0aW1lIC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIE9uIHRpbWUgZGVwYXJ0dXJlICggRXhjZWxsZW50IC0gQnV0IG5vdCBtdWNoIGludGVyZXN0IHRvIHRoZSBzdHVkeSkKQXJyaXZlZCBsYXRlIC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIGVhcmx5IGRlcGFydHVyZSAoIEV4Y2VsbGVudCAtIEJ1dCBub3QgbXVjaCBpbnRlcmVzdCB0byB0aGUgc3R1ZHkpCgpBcnJpdmVkIGVhcmx5IC0gdGltZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggVmVyeSBtdWNoIEludGVyZXN0ZWQgKQpBcnJpdmVkIGVhcmx5IC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIE9uIHRpbWUgZGVwYXJ0dXJlICggRXhjZWxsZW50IC0gQnV0IG5vdCBtdWNoIGludGVyZXN0IHRvIHRoZSBzdHVkeSkKQXJyaXZlZCBlYXJseSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBlYXJseSBkZXBhcnR1cmUgKCBFeGNlbGxlbnQgLSBCdXQgbm90IG11Y2ggaW50ZXJlc3QgdG8gdGhlIHN0dWR5KQoKClRoYXQgaXMgcGFydCAxIG9mIHdoZXJlIGluIHdlIGFyZSBsb29raW5nIGF0IEZsaWdodHMgLi4ubm93IHdlIG5lZWQgdG8gbG9vayBhdCBXZWF0aGVyIGFuZCB3aGF0cyByZWxldmFudCB0byB1cwoKU28gV2hhdCBkbyB3ZSBoYXZlIGhlcmUgOiAyNjIwMSByb3dzIG9mIGluZm9ybWF0aW9uICwgbG90cyBvZiBtaXNzaW5nIGluZm8gaW4gdGVtcCAvIGRld3AvIGh1bWlkIC8gcHJlY2lwIC8gcHJlc3N1cmUgCkltcG9ydGFudCBjb2x1bW5zIGZvciB1cyBWaXNpYmlsaXR5IGFuZCB3ZSBoYXZlIGhhcmRseSBhbnkgTkEncyAoIE9ubHkgMTEgd2hpY2ggaXMgZ3JlYXQgbmV3cykgCkFsc28gV2luZF9zcGVlZCAvIHdpbmRfZGlyZWN0aW9uIC8gd2luZF9ndXN0ICwgbGVzc2VyIGFtb3VudCBvZiBOQSdzLi4gZ3Vlc3Mgd2UgY2FuIGV4dHJhY3Qgc29tZSB2YWx1YWJsZSBkZXRhaWxzIHRoZXJlIGFzIHdlbGwuCgpFeHBsb3JpbmcgdGVtcCAvIGRld3AgLyBodW1pCgpUaGVyZSBpcyBhIGxvdCBvZiBtaXNzaW5nIGluZm9ybWF0aW9uCgpIb3dldmVyIGxldCB1cyBmaXJzdCBmaWx0ZXIgcmVsZXZhbnQgaW5mb3JtYXRpb24uIApGaXJzdGx5LCBsZXRzIHB1bGwgb3V0IHdlYXRoZXIgb2YgTmV3YXJrIGFuZCB0aGVuIHN0b3JlIGl0IGluIGEgdGliYmxlIG5hbWVzIHdlYXRoZXJfbmV3YXJrCk5vdywgd2VhdGhlcl9uZXdhcmsgaGFzIDg3NTMgcm93cyBvdXQgb2Ygd2hpY2ggb25seSAyMDQgcm93cyBoYXZlIGluZm9ybWF0aW9uIDk3LjYlIGluZm8gaXMgTkEncwpNb3JlIGltcG9ydGFudGx5IHRoZSByZWFkaW5ncyBhcmUgdGFrZW4gYXQgZGlmZmVyZW50IGhvdXJzIG9mIHRoZSBkYXksIHNvIGl0cyBvYnZpb3VzIHRoYXQgY29uZGl0aW9ucyB3aWxsIGNoYW5nZSBkdXJpbmcgbW9ybmluZyAvIGFmdGVybm9vbiAvIGV2ZW5pbmcgLyBuaWdodC4gSGVuY2UgdGhlcmUgaXMgYSBmZWVsaW5nIHRoYXQgdGFraW5nIGEgbWVhbiBvciBtZWRpYW4gb2YgdGhlIG1pc3NpbmcgZGF0YSB3aWxsIG5vdCBtYWtlIHNlbmNlIGFuZCB3ZSB3aWxsIGJlIGZvcmNlZCB0byBkcm9wIHRoZXNlIHRocmVlIHZhcmlhYmxlcyBpbiBvdXIgc3R1ZHkuIAoKYGBge3J9Cm5ld2Fya193ZWF0aGVyIDwtIHdlYXRoZXIgJT4lCiAgZmlsdGVyKG9yaWdpbiA9PSAiRVdSIikKClZpZXcobmV3YXJrX3dlYXRoZXIpCmBgYApTbyBXaGF0IGRvIHdlIGhhdmUgaGVyZSA6IDI2MjAxIHJvd3Mgb2YgaW5mb3JtYXRpb24gLCBsb3RzIG9mIG1pc3NpbmcgaW5mbyBpbiB0ZW1wIC8gZGV3cC8gaHVtaWQgLyBwcmVjaXAgLyBwcmVzc3VyZSAKSW1wb3J0YW50IGNvbHVtbnMgZm9yIHVzIFZpc2liaWxpdHkgYW5kIHdlIGhhdmUgaGFyZGx5IGFueSBOQSdzICggT25seSAxMSB3aGljaCBpcyBncmVhdCBuZXdzKSAKQWxzbyBXaW5kX3NwZWVkIC8gd2luZF9kaXJlY3Rpb24gLyB3aW5kX2d1c3QgLCBsZXNzZXIgYW1vdW50IG9mIE5BJ3MuLiBndWVzcyB3ZSBjYW4gZXh0cmFjdCBzb21lIHZhbHVhYmxlIGRldGFpbHMgdGhlcmUgYXMgd2VsbC4KCgpMaWtlIHdlIGNyZWF0ZWQgYSBuZXcgdGliYmxlIGZvciBuZXdhcmtfd2VhdGhlciBsZXRzIG5vdyBjcmVhdGUgYSBuZXcgdGliYmxlIGZvciBuZXdhcmtfZmxpZ2h0cwpgYGB7cn0KbmV3YXJrX2ZsaWdodHMgPC0gZmxpZ2h0cyU+JQogIGZpbHRlciAoIG9yaWdpbiA9PSAiRVdSIikKCnN1bW1hcnkobmV3YXJrX2ZsaWdodHMpCmRpbShuZXdhcmtfZmxpZ2h0cykKCmBgYApMZXQgdXMgbm93IGpvaW4gdGhlc2UgdHdvIHRpYmJsZXMgdG8gY3JlYXRlIGEgbmV3IHRpYmJsZSBoYXZpbmcgYWxsIHJlbGV2YW50IGluZm9ybWF0aW9uIHdlIG5lZWQKCmBgYHtyfQpsaWJyYXJ5KGRicGx5cikKCm5ld2Fya19kYXRhIDwtIGxlZnRfam9pbihuZXdhcmtfZmxpZ2h0cywgbmV3YXJrX3dlYXRoZXIsICJ0aW1lX2hvdXIiKSAlPiUKICBzZWxlY3QodGltZV9ob3VyLCBkZXBfZGVsYXksIGFycl9kZWxheSwgY2FycmllciwgZmxpZ2h0LHRhaWxudW0sIGFpcl90aW1lLCBkaXN0YW5jZSx0ZW1wLCBkZXdwLCBodW1pZCwgd2luZF9kaXIsIHdpbmRfc3BlZWQsIHdpbmRfZ3VzdCwgcHJlY2lwLCBwcmVzc3VyZSwgdmlzaWIpCgpWaWV3KG5ld2Fya19kYXRhKQpgYGAKCkxldHMgcGxvdCB0aGlzIGFuZCBzZWUgaWYgd2UgY2FuIGZpbmQgYW55IHJlbGF0aW9uIGJldHdlZW4gZmxpZ2h0cyBkZWxheWVkIGFuZCBpbmZsdWVuY2luZyBmYWN0b3JzIGZyb20gd2VhdGhlciAoIFZpc2liaWxpdHkpCgpgYGB7cn0KbmV3YXJrX2RhdGFfZGVsYXllZCA8LSBuZXdhcmtfZGF0YSAlPiUKICBmaWx0ZXIoZGVwX2RlbGF5ICA+ICIwIikgIyBmaWx0ZXJpbmcgZmxpZ2h0cyB3aGljaCB3ZXJlIGRlbGF5ZWQKICAKc3VtbWFyeShuZXdhcmtfZGF0YV9kZWxheWVkKQpnZ3Bsb3QoYWVzKHggPSBkZXBfZGVsYXksIHkgPSB2aXNpYikpICsKICBnZW9tX3BvaW50KCkKCmBgYAoKKCBUZW1wZXJhdHVyZSkKYGBge3J9Cm5ld2Fya19kYXRhICU+JQogIGZpbHRlcihkZXBfZGVsYXkgID4gIjAiKSAlPiUgIyBmaWx0ZXJpbmcgZmxpZ2h0cyB3aGljaCB3ZXJlIGRlbGF5ZWQKZ2dwbG90KGFlcyh4ID0gZGVwX2RlbGF5LCB5ID0gdGVtcCkpICsKICBnZW9tX3BvaW50KCkKYGBgCgo=</div>
+summary(weather_neward)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIG9yaWdpbiAgICAgICAgICAgICAgIHllYXIgICAgICAgICAgbW9udGggICAgICAgICAgICAgZGF5ICAgICAgICAgICAgIGhvdXIgICAgICAgICB3aW5kX2RpciAgICAgICB3aW5kX3NwZWVkICAgIFxuIExlbmd0aDo4NDk4ICAgICAgICBNaW4uICAgOjIwMTcgICBNaW4uICAgOiAxLjAwMCAgIE1pbi4gICA6IDEuMDAgICBNaW4uICAgOiAwLjAgICBNaW4uICAgOiAgMC4wICAgTWluLiAgIDogMC4wMDAgIFxuIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIwMTcgICAxc3QgUXUuOiA0LjAwMCAgIDFzdCBRdS46IDguMDAgICAxc3QgUXUuOiA2LjAgICAxc3QgUXUuOiA3MC4wICAgMXN0IFF1LjogNS43NTQgIFxuIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjIwMTcgICBNZWRpYW4gOiA3LjAwMCAgIE1lZGlhbiA6MTYuMDAgICBNZWRpYW4gOjEyLjAgICBNZWRpYW4gOjIxMC4wICAgTWVkaWFuIDogOC4wNTYgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjIwMTcgICBNZWFuICAgOiA2LjU0OCAgIE1lYW4gICA6MTUuNTcgICBNZWFuICAgOjExLjUgICBNZWFuICAgOjE4Mi4xICAgTWVhbiAgIDogOC45MjYgIFxuICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjIwMTcgICAzcmQgUXUuOjEwLjAwMCAgIDNyZCBRdS46MjMuMDAgICAzcmQgUXUuOjE3LjAgICAzcmQgUXUuOjI3MC4wICAgM3JkIFF1LjoxMS41MDggIFxuICAgICAgICAgICAgICAgICAgICBNYXguICAgOjIwMTcgICBNYXguICAgOjEyLjAwMCAgIE1heC4gICA6MzEuMDAgICBNYXguICAgOjIzLjAgICBNYXguICAgOjM2MC4wICAgTWF4LiAgIDoyNi40NjggIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSdzICAgOjYxNCAgICAgTkEncyAgIDo2MTAgICAgIFxuICAgd2luZF9ndXN0ICAgICAgICAgIHByZWNpcCAgICAgICAgIHByZXNzdXJlICAgICAgICB2aXNpYiAgICAgICAgICB0aW1lX2hvdXIgICAgICAgICAgICAgICAgICAgICAgICB0ZW1wICAgICBcbiBNaW4uICAgOiAwLjAwMCAgIE1pbi4gICA6MC4wMDAgICBNaW4uICAgOjEwMDkgICBNaW4uICAgOiAwLjEzMCAgIE1pbi4gICA6MjAxNy0wMS0wMSAwODowMDowMCAgIE1pbi4gICA6MzIuMCAgXG4gMXN0IFF1LjogNi42MjIgICAxc3QgUXUuOjAuMDEwICAgMXN0IFF1LjoxMDEzICAgMXN0IFF1LjoxMC4wMDAgICAxc3QgUXUuOjIwMTctMDQtMDIgMjM6MTU6MDAgICAxc3QgUXUuOjU3LjkgIFxuIE1lZGlhbiA6IDkuMjcwICAgTWVkaWFuIDowLjAxMCAgIE1lZGlhbiA6MTAxNiAgIE1lZGlhbiA6MTAuMDAwICAgTWVkaWFuIDoyMDE3LTA3LTA1IDA4OjMwOjAwICAgTWVkaWFuIDo1Ny45ICBcbiBNZWFuICAgOjEwLjI3MiAgIE1lYW4gICA6MC4wMjIgICBNZWFuICAgOjEwMTcgICBNZWFuICAgOiA5LjMzNiAgIE1lYW4gICA6MjAxNy0wNy0wMyAwNzoyMjo0MSAgIE1lYW4gICA6NTcuOSAgXG4gM3JkIFF1LjoxMy4yNDMgICAzcmQgUXUuOjAuMDIwICAgM3JkIFF1LjoxMDE5ICAgM3JkIFF1LjoxMC4wMDAgICAzcmQgUXUuOjIwMTctMTAtMDMgMDA6NDU6MDAgICAzcmQgUXUuOjU3LjkgIFxuIE1heC4gICA6MzAuNDU5ICAgTWF4LiAgIDowLjI5MCAgIE1heC4gICA6MTAzNyAgIE1heC4gICA6MTAuMDAwICAgTWF4LiAgIDoyMDE3LTEyLTMwIDIzOjAwOjAwICAgTWF4LiAgIDo3My4wICBcbiBOQSdzICAgOjYxMCAgICAgIE5BJ3MgICA6ODEzNCAgICBOQSdzICAgOjg0MTkgICBOQSdzICAgOjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICBkZXdwICAgICAgICAgICBodW1pZCAgICAgIFxuIE1pbi4gICA6MjQuMTAgICBNaW4uICAgOjY1LjYwICBcbiAxc3QgUXUuOjQ2LjAwICAgMXN0IFF1Ljo2NS42MCAgXG4gTWVkaWFuIDo0Ni4wMCAgIE1lZGlhbiA6NjUuNjAgIFxuIE1lYW4gICA6NDYuMDEgICBNZWFuICAgOjY1LjY0ICBcbiAzcmQgUXUuOjQ2LjAwICAgM3JkIFF1Ljo2NS42MCAgXG4gTWF4LiAgIDo3MC4wMCAgIE1heC4gICA6OTYuOTcgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiJ9 -->
+<pre><code>    origin               year          month             day             hour         wind_dir       wind_speed    
+ Length:8498        Min.   :2017   Min.   : 1.000   Min.   : 1.00   Min.   : 0.0   Min.   :  0.0   Min.   : 0.000  
+ Class :character   1st Qu.:2017   1st Qu.: 4.000   1st Qu.: 8.00   1st Qu.: 6.0   1st Qu.: 70.0   1st Qu.: 5.754  
+ Mode  :character   Median :2017   Median : 7.000   Median :16.00   Median :12.0   Median :210.0   Median : 8.056  
+                    Mean   :2017   Mean   : 6.548   Mean   :15.57   Mean   :11.5   Mean   :182.1   Mean   : 8.926  
+                    3rd Qu.:2017   3rd Qu.:10.000   3rd Qu.:23.00   3rd Qu.:17.0   3rd Qu.:270.0   3rd Qu.:11.508  
+                    Max.   :2017   Max.   :12.000   Max.   :31.00   Max.   :23.0   Max.   :360.0   Max.   :26.468  
+                                                                                   NA's   :614     NA's   :610     
+   wind_gust          precip         pressure        visib          time_hour                        temp     
+ Min.   : 0.000   Min.   :0.000   Min.   :1009   Min.   : 0.130   Min.   :2017-01-01 08:00:00   Min.   :32.0  
+ 1st Qu.: 6.622   1st Qu.:0.010   1st Qu.:1013   1st Qu.:10.000   1st Qu.:2017-04-02 23:15:00   1st Qu.:57.9  
+ Median : 9.270   Median :0.010   Median :1016   Median :10.000   Median :2017-07-05 08:30:00   Median :57.9  
+ Mean   :10.272   Mean   :0.022   Mean   :1017   Mean   : 9.336   Mean   :2017-07-03 07:22:41   Mean   :57.9  
+ 3rd Qu.:13.243   3rd Qu.:0.020   3rd Qu.:1019   3rd Qu.:10.000   3rd Qu.:2017-10-03 00:45:00   3rd Qu.:57.9  
+ Max.   :30.459   Max.   :0.290   Max.   :1037   Max.   :10.000   Max.   :2017-12-30 23:00:00   Max.   :73.0  
+ NA's   :610      NA's   :8134    NA's   :8419   NA's   :3                                                    
+      dewp           humid      
+ Min.   :24.10   Min.   :65.60  
+ 1st Qu.:46.00   1st Qu.:65.60  
+ Median :46.00   Median :65.60  
+ Mean   :46.01   Mean   :65.64  
+ 3rd Qu.:46.00   3rd Qu.:65.60  
+ Max.   :70.00   Max.   :96.97  
+                                </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyh3ZWF0aGVyX25ld2FyZClcbmBgYCJ9 -->
+<pre class="r"><code>View(weather_neward)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV3YXJrX2RhdGFfdGVtcCA8LSBsZWZ0X2pvaW4obmV3YXJrX2ZsaWdodHMsIHdlYXRoZXJfcmVwbGFjaW5nX25hLCBcInRpbWVfaG91clwiKVxuXG5zdW1tYXJ5KG5ld2Fya19kYXRhX3RlbXApXG5gYGAifQ== -->
+<pre class="r"><code>newark_data_temp &lt;- left_join(newark_flights, weather_replacing_na, &quot;time_hour&quot;)
+
+summary(newark_data_temp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgdGltZV9ob3VyICAgICAgICAgICAgICAgICAgICAgZGVwX2RlbGF5ICAgICAgICAgYXJyX2RlbGF5ICAgICAgICAgIGNhcnJpZXIgICAgICAgICAgICAgIGZsaWdodCAgICBcbiBNaW4uICAgOjIwMTctMDEtMDEgMDU6MDA6MDAgICBNaW4uICAgOiAtMjUuMDAgICBNaW4uICAgOiAtNzguMDAwICAgTGVuZ3RoOjExMjcwMiAgICAgIE1pbi4gICA6ICAgNSAgXG4gMXN0IFF1LjoyMDE3LTA0LTA2IDE5OjAwOjAwICAgMXN0IFF1LjogIC02LjAwICAgMXN0IFF1LjogLTE4LjAwMCAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOiA4NzYgIFxuIE1lZGlhbiA6MjAxNy0wNy0wNCAxODowMDowMCAgIE1lZGlhbiA6ICAtMi4wMCAgIE1lZGlhbiA6ICAtNi4wMDAgICBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDoxNTk4ICBcbiBNZWFuICAgOjIwMTctMDctMDQgMDc6MzE6MDcgICBNZWFuICAgOiAgMTUuNTEgICBNZWFuICAgOiAgIDkuMTI5ICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6MTkxOCAgXG4gM3JkIFF1LjoyMDE3LTEwLTAyIDE0OjQ1OjAwICAgM3JkIFF1LjogIDE0LjAwICAgM3JkIFF1LjogIDE2LjAwMCAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjI0MTQgIFxuIE1heC4gICA6MjAxNy0xMi0zMSAyMjowMDowMCAgIE1heC4gICA6MTIxNy4wMCAgIE1heC4gICA6MTIxOS4wMDAgICAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo2ODk5ICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICB0YWlsbnVtICAgICAgICAgICAgIGFpcl90aW1lICAgICAgICBkaXN0YW5jZSAgICAgICAgIHRlbXAgICAgICAgICAgICBkZXdwICAgICAgICAgICBodW1pZCAgICAgIFxuIExlbmd0aDoxMTI3MDIgICAgICBNaW4uICAgOiAyMC4wICAgTWluLiAgIDogIDkzICAgTWluLiAgIDo0OC4wMCAgIE1pbi4gICA6NDYuMDAgICBNaW4uICAgOjY1LjYwICBcbiBDbGFzcyA6Y2hhcmFjdGVyICAgMXN0IFF1LjogOTcuMCAgIDFzdCBRdS46IDYyOCAgIDFzdCBRdS46NTcuOTAgICAxc3QgUXUuOjQ2LjAwICAgMXN0IFF1Ljo2NS42MCAgXG4gTW9kZSAgOmNoYXJhY3RlciAgIE1lZGlhbiA6MTM2LjAgICBNZWRpYW4gOiA5MzcgICBNZWRpYW4gOjU3LjkwICAgTWVkaWFuIDo0Ni4wMCAgIE1lZGlhbiA6NjUuNjAgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjE2MS42ICAgTWVhbiAgIDoxMTQzICAgTWVhbiAgIDo1Ny45MSAgIE1lYW4gICA6NDYuMDIgICBNZWFuICAgOjY1LjY0ICBcbiAgICAgICAgICAgICAgICAgICAgM3JkIFF1LjoyMDguMCAgIDNyZCBRdS46MTU2OSAgIDNyZCBRdS46NTcuOTAgICAzcmQgUXUuOjQ2LjAwICAgM3JkIFF1Ljo2NS42MCAgXG4gICAgICAgICAgICAgICAgICAgIE1heC4gICA6Njk2LjAgICBNYXguICAgOjQ5NjIgICBNYXguICAgOjczLjAwICAgTWF4LiAgIDo3MC4wMCAgIE1heC4gICA6OTYuOTcgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDozMjM4ICAgIE5BJ3MgICA6MzIzOCAgICBOQSdzICAgOjMyMzggICBcbiJ9 -->
+<pre><code>   time_hour                     dep_delay         arr_delay          carrier              flight    
+ Min.   :2017-01-01 05:00:00   Min.   : -25.00   Min.   : -78.000   Length:112702      Min.   :   5  
+ 1st Qu.:2017-04-06 19:00:00   1st Qu.:  -6.00   1st Qu.: -18.000   Class :character   1st Qu.: 876  
+ Median :2017-07-04 18:00:00   Median :  -2.00   Median :  -6.000   Mode  :character   Median :1598  
+ Mean   :2017-07-04 07:31:07   Mean   :  15.51   Mean   :   9.129                      Mean   :1918  
+ 3rd Qu.:2017-10-02 14:45:00   3rd Qu.:  14.00   3rd Qu.:  16.000                      3rd Qu.:2414  
+ Max.   :2017-12-31 22:00:00   Max.   :1217.00   Max.   :1219.000                      Max.   :6899  
+                                                                                                     
+   tailnum             air_time        distance         temp            dewp           humid      
+ Length:112702      Min.   : 20.0   Min.   :  93   Min.   :48.00   Min.   :46.00   Min.   :65.60  
+ Class :character   1st Qu.: 97.0   1st Qu.: 628   1st Qu.:57.90   1st Qu.:46.00   1st Qu.:65.60  
+ Mode  :character   Median :136.0   Median : 937   Median :57.90   Median :46.00   Median :65.60  
+                    Mean   :161.6   Mean   :1143   Mean   :57.91   Mean   :46.02   Mean   :65.64  
+                    3rd Qu.:208.0   3rd Qu.:1569   3rd Qu.:57.90   3rd Qu.:46.00   3rd Qu.:65.60  
+                    Max.   :696.0   Max.   :4962   Max.   :73.00   Max.   :70.00   Max.   :96.97  
+                                                   NA's   :3238    NA's   :3238    NA's   :3238   </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhuZXdhcmtfZGF0YV90ZW1wKVxuYGBgIn0= -->
+<pre class="r"><code>View(newark_data_temp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>summary(newark_data) View(newark_data)</p>
+<p>write_csv(newark_data_clean,‘clean_data/newark_data_clean.csv’) ```</p>
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQlVTSU5FU1MgUVVFU1RJT04gOgoKWW91IGhhdmUgYmVlbiBoaXJlZCBieSBOZXdhcmsgYWlycG9ydCB0byBpbnZlc3RpZ2F0ZSB0aGUgZWZmZWN0IG9mIHdlYXRoZXIgb24gYWVyb3BsYW5lIGRlcGFydHVyZSBkZWxheXMuCgpUaGV5IGJlbGlldmUgcG9vciB3ZWF0aGVyIGNvbmRpdGlvbnMgYXJlIGNhdXNpbmcgdG9vIG1hbnkgZGVsYXlzIGFuZCB3YW50IHRvIGludmVzdCBpbiBpbXByb3ZpbmcgZmFjaWxpdGllcywgc28gdGhhdCBhaXJjcmFmdCBjYW4gdGFrZSBvZmYgaW4gbW9yZSB0eXBlcyBvZiB3ZWF0aGVyLiBIb3dldmVyLCB0aGV5IGRvIG5vdCBmdWxseSB1bmRlcnN0YW5kIGhvdyBzZXJpb3VzIHdlYXRoZXIgcmVsYXRlZCBkZWxheXMgYXJlLCBhbmQgYXJlIG5vdCBzdXJlIHdoYXQgdHlwZSBvZiB3ZWF0aGVyIHRoZXkgc2hvdWxkIGJlIG1vc3QgY29uY2VybmVkIGFib3V0LiBBcyBwYXJ0IG9mIGludmVzdGlnYXRpbmcgdGhlIGVmZmVjdCBvZiB3ZWF0aGVyIHlvdSBzaG91bGQgaW52ZXN0aWdhdGUgb3RoZXIgZmFjdG9ycyB0byB1bmRlcnN0YW5kIGhvdyBpbXBvcnRhbnQgd2VhdGhlciBpcyBpbiBjb21wYXJpc29uIHRvIHRoZW0uCgpUaGV5IGFsc28gd2FudCB0byB1bmRlcnN0YW5kIGhvdyB0aGV5IGNvbXBhcmUgdG8gb3RoZXIgTmV3IFlvcmsgYWlycG9ydHMuCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KGhlcmUpCmBgYAoKYGBge3J9CmZsaWdodHMgPC0gcmVhZF9jc3YoaGVyZSgicmF3X2RhdGEvZmxpZ2h0cy5jc3YiKSkKCmFpcmxpbmVzIDwtIHJlYWRfY3N2KGhlcmUoInJhd19kYXRhL2FpcmxpbmVzLmNzdiIpKQoKYWlycG9ydHMgPC0gcmVhZF9jc3YoaGVyZSgicmF3X2RhdGEvYWlycG9ydHMuY3N2IikpCgpwbGFuZXMgPC0gcmVhZF9jc3YoaGVyZSgicmF3X2RhdGEvcGxhbmVzLmNzdiIpKQoKd2VhdGhlciA8LSByZWFkX2NzdihoZXJlKCJyYXdfZGF0YS93ZWF0aGVyLmNzdiIpKQpgYGAKClZpc3VhbGlzaW5nIHRoZSBkYXRhCmBgYHtyfQpWaWV3KGZsaWdodHMpCgpzdW1tYXJ5KGZsaWdodHMpCgpzdW1tYXJ5KGFpcmxpbmVzKQoKc3VtbWFyeShhaXJwb3J0cykKCnN1bW1hcnkocGxhbmVzKQoKc3VtbWFyeSh3ZWF0aGVyKQoKVmlldyh3ZWF0aGVyKQpgYGAKQmVmb3Igc3RhcnRpbmcgYW55IHNvcnQgb2YgYW5hbHlzaXMgbGV0IHVzIGZpcnN0IHRoaW5rIGFib3V0IGhvdyBhbiBhaXJwb3J0IG9wZXJhdGVzOgoKTm8gZmxpZ2h0cyBhcmUgYWx3YXlzIHN0YXRpb25hcnkgYXQgdGhlIGFpcnBvcnQsIHRoZXkgYXJyaXZlIGZyb20gc29tZXdoZXJlLgoKSW4gb3VyIGRhdGEgc2V0cyB3ZSBoYXZlIHNjaGVkdWxlZCBhcnJpdmFsIHRpbWUgLyBhY3R1YWwgYXJyaXZhbCB0aW1lIGFuZCBpZiB0aGVyZSB3YXMgYW55IGRlbGF5IGluIHRoZSBmbGlnaHRzLgpXaGF0IGlzIGltcG9ydGFudCB0byB1cyBhcmUgdGhlIGZsaWdodHMgd2hpY2ggd2VyZSBkZWxheWVkLiggV2UgbmVlZCB0byBjaGVjayBpZiB0aGVyZSB3YXMgYW55IHJlbGF0aW9uc2hpcCBiZXR3ZWVuIHdlYXRoZXIgY29uZGl0aW9ucyBhdCB0aGUgdGltZSBvZiBhcnJpdmFsIGFuZCB0aGUgZmxpZ2h0cyB3aGVyZSBpbiB0aGVyZSB3YXMgYSBkZWxheSBpbiBhcnJpdmFsKQpTbyB3ZSBoYXZlIDMgb3V0Y29tZXMgaGVyZSAtIEFycml2ZWQgTGF0ZSAvIEFycml2ZWQgb24gdGltZSAvIEFycml2ZWQgYmVmb3JlIHRpbWUgCgpQYXJ0IDIgb2YgdGhpcyBzdHVkeSBpcyB0aGUgdGltZSB0YWtlbiBmb3IgcHJlcCBvZiB0aGUgYWlyY3JhZnQgCgpBZ2FpbiB3ZSBjYW4gbG9vayBhdCBkaWZmZXJlbnQgb3V0Y29tZXMgOgoKQXJyaXZlZCBMZXRlIC0gdGltZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggSW50ZXJlc3RlZCApCkFycml2ZWQgbGF0ZSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBPbiB0aW1lIGRlcGFydHVyZSAoIEV4Y2VsbGVudCAtIEJ1dCBub3QgbXVjaCBpbnRlcmVzdCB0byB0aGUgc3R1ZHkpCkFycml2ZWQgbGF0ZSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBlYXJseSBkZXBhcnR1cmUgKCBFeGNlbGxlbnQgLSBCdXQgbm90IG11Y2ggaW50ZXJlc3QgdG8gdGhlIHN0dWR5KQoKQXJyaXZlZCBvbiB0aW1lIC0gdG9tZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggVmVyeSBJbnRlcmVzdGVkICkKQXJyaXZlZCBvbiB0aW1lIC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIE9uIHRpbWUgZGVwYXJ0dXJlICggRXhjZWxsZW50IC0gQnV0IG5vdCBtdWNoIGludGVyZXN0IHRvIHRoZSBzdHVkeSkKQXJyaXZlZCBsYXRlIC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIGVhcmx5IGRlcGFydHVyZSAoIEV4Y2VsbGVudCAtIEJ1dCBub3QgbXVjaCBpbnRlcmVzdCB0byB0aGUgc3R1ZHkpCgpBcnJpdmVkIGVhcmx5IC0gdGltZSB0b2FrZW4gdG8gcHJlcCAtIExhdGUgZGVwICggVmVyeSBtdWNoIEludGVyZXN0ZWQgKQpBcnJpdmVkIGVhcmx5IC0gdGltZSB0YWtlbiBmb3IgcHJlcCAtIE9uIHRpbWUgZGVwYXJ0dXJlICggRXhjZWxsZW50IC0gQnV0IG5vdCBtdWNoIGludGVyZXN0IHRvIHRoZSBzdHVkeSkKQXJyaXZlZCBlYXJseSAtIHRpbWUgdGFrZW4gZm9yIHByZXAgLSBlYXJseSBkZXBhcnR1cmUgKCBFeGNlbGxlbnQgLSBCdXQgbm90IG11Y2ggaW50ZXJlc3QgdG8gdGhlIHN0dWR5KQoKClRoYXQgaXMgcGFydCAxIG9mIHdoZXJlIGluIHdlIGFyZSBsb29raW5nIGF0IEZsaWdodHMgLi4ubm93IHdlIG5lZWQgdG8gbG9vayBhdCBXZWF0aGVyIGFuZCB3aGF0cyByZWxldmFudCB0byB1cwoKU28gV2hhdCBkbyB3ZSBoYXZlIGhlcmUgOiAyNjIwMSByb3dzIG9mIGluZm9ybWF0aW9uICwgbG90cyBvZiBtaXNzaW5nIGluZm8gaW4gdGVtcCAvIGRld3AvIGh1bWlkIC8gcHJlY2lwIC8gcHJlc3N1cmUgCkltcG9ydGFudCBjb2x1bW5zIGZvciB1cyBWaXNpYmlsaXR5IGFuZCB3ZSBoYXZlIGhhcmRseSBhbnkgTkEncyAoIE9ubHkgMTEgd2hpY2ggaXMgZ3JlYXQgbmV3cykgCkFsc28gV2luZF9zcGVlZCAvIHdpbmRfZGlyZWN0aW9uIC8gd2luZF9ndXN0ICwgbGVzc2VyIGFtb3VudCBvZiBOQSdzLi4gZ3Vlc3Mgd2UgY2FuIGV4dHJhY3Qgc29tZSB2YWx1YWJsZSBkZXRhaWxzIHRoZXJlIGFzIHdlbGwuCgpFeHBsb3JpbmcgdGVtcCAvIGRld3AgLyBodW1pCgpUaGVyZSBpcyBhIGxvdCBvZiBtaXNzaW5nIGluZm9ybWF0aW9uCgpIb3dldmVyIGxldCB1cyBmaXJzdCBmaWx0ZXIgcmVsZXZhbnQgaW5mb3JtYXRpb24uIApGaXJzdGx5LCBsZXRzIHB1bGwgb3V0IHdlYXRoZXIgb2YgTmV3YXJrIGFuZCB0aGVuIHN0b3JlIGl0IGluIGEgdGliYmxlIG5hbWVzIHdlYXRoZXJfbmV3YXJrCk5vdywgd2VhdGhlcl9uZXdhcmsgaGFzIDg3NTMgcm93cyBvdXQgb2Ygd2hpY2ggb25seSAyMDQgcm93cyBoYXZlIGluZm9ybWF0aW9uIDk3LjYlIGluZm8gaXMgTkEncwpNb3JlIGltcG9ydGFudGx5IHRoZSByZWFkaW5ncyBhcmUgdGFrZW4gYXQgZGlmZmVyZW50IGhvdXJzIG9mIHRoZSBkYXksIHNvIGl0cyBvYnZpb3VzIHRoYXQgY29uZGl0aW9ucyB3aWxsIGNoYW5nZSBkdXJpbmcgbW9ybmluZyAvIGFmdGVybm9vbiAvIGV2ZW5pbmcgLyBuaWdodC4gSGVuY2UgdGhlcmUgaXMgYSBmZWVsaW5nIHRoYXQgdGFraW5nIGEgbWVhbiBvciBtZWRpYW4gb2YgdGhlIG1pc3NpbmcgZGF0YSB3aWxsIG5vdCBtYWtlIHNlbmNlIGFuZCB3ZSB3aWxsIGJlIGZvcmNlZCB0byBkcm9wIHRoZXNlIHRocmVlIHZhcmlhYmxlcyBpbiBvdXIgc3R1ZHkuIAoKQ3JlYXRpbmcgYSBzZXBlcmF0ZSBkYXRhIHNldCBjYWxsZWQgbmV3YXJrX3dhZXRoZXIgZnJvbSB0aGUgd2VhdGhlciBkYXRhIHNldApgYGB7cn0KbmV3YXJrX3dlYXRoZXIgPC0gd2VhdGhlciAlPiUKICBmaWx0ZXIob3JpZ2luID09ICJFV1IiKQoKc3VtbWFyeShuZXdhcmtfd2VhdGhlcikKVmlldyhuZXdhcmtfd2VhdGhlcikKYGBgClNvIFdoYXQgZG8gd2UgaGF2ZSBoZXJlIDogMjYyMDEgcm93cyBvZiBpbmZvcm1hdGlvbiAsIGxvdHMgb2YgbWlzc2luZyBpbmZvIGluIHRlbXAgLyBkZXdwLyBodW1pZCAvIHByZWNpcCAvIHByZXNzdXJlIApJbXBvcnRhbnQgY29sdW1ucyBmb3IgdXMgVmlzaWJpbGl0eSBhbmQgd2UgaGF2ZSBoYXJkbHkgYW55IE5BJ3MgKCBPbmx5IDExIHdoaWNoIGlzIGdyZWF0IG5ld3MpIApBbHNvIFdpbmRfc3BlZWQgLyB3aW5kX2RpcmVjdGlvbiAvIHdpbmRfZ3VzdCAsIGxlc3NlciBhbW91bnQgb2YgTkEncy4uIGd1ZXNzIHdlIGNhbiBleHRyYWN0IHNvbWUgdmFsdWFibGUgZGV0YWlscyB0aGVyZSBhcyB3ZWxsLgoKCkNyZWF0aW5nIGEgbmV3IHRpYmJsZSBmb3IgZmxpZ2h0cyBmbHlpbmcgb3V0IG9mIE5ld2FyY2ggQWlycG9ydCBuYW1lZCBhcyBuZXdhcmtfZmxpZ2h0cwpgYGB7cn0KbmV3YXJrX2ZsaWdodHMgPC0gZmxpZ2h0cyU+JQogIGZpbHRlciAoIG9yaWdpbiA9PSAiRVdSIikgJT4lCiAgc2VsZWN0KHRpbWVfaG91cixkZXBfZGVsYXksYXJyX2RlbGF5LGNhcnJpZXIsZmxpZ2h0LHRhaWxudW0sYWlyX3RpbWUsZGlzdGFuY2UpICU+JQogIGRyb3BfbmEoKQoKc3VtbWFyeShuZXdhcmtfZmxpZ2h0cykKCmBgYAoKIyBQbG90IGFuZCBjaGVjayAKYGBge3J9CiMgbmV3YXJrX2RhdGFfZGVsYXllZCA8LSBuZXdhcmtfZGF0YSAlPiUKIyAgZmlsdGVyKGRlcF9kZWxheSAgPiAiMCIpICMgZmlsdGVyaW5nIGZsaWdodHMgd2hpY2ggd2VyZSBkZWxheWVkCiAgCiNzdW1tYXJ5KG5ld2Fya19kYXRhX2RlbGF5ZWQpCiNnZ3Bsb3QoYWVzKHggPSBkZXBfZGVsYXksIHkgPSB2aXNpYikpICsKIyAgZ2VvbV9wb2ludCgpCgpgYGAKCiggVGVtcGVyYXR1cmUpCmBgYHtyfQojbmV3YXJrX2RhdGEgJT4lCiMgIGZpbHRlcihkZXBfZGVsYXkgID4gIjAiKSAlPiUgIyBmaWx0ZXJpbmcgZmxpZ2h0cyB3aGljaCB3ZXJlIGRlbGF5ZWQKI2dncGxvdChhZXMoeCA9IGRlcF9kZWxheSwgeSA9IHRlbXApKSArCiMgIGdlb21fcG9pbnQoKQpgYGAKClBhY2thZ2UgUmVpbSBob2xkcyBnbG9iYWwgd2VhdGhlciBkYXRhIGFuZCBjYW4gaGVscCB1cyB3aXRoIGEgbG90IG9mIG1pc3NpbmcgdmFsdWVzIGluIG91ciB3ZWF0aGVyIGRhdGEgc2V0CmBgYHtyfQppbnN0YWxsLnBhY2thZ2VzKCJyaWVtIikKYGBgCgpgYGB7cn0KbGlicmFyeShyaWVtKQpgYGAKVXNpbmcgdGhlIGxpYnJhcnkgcmVpbSB0byBicmluZyBpbiB3ZWF0aGVyIGRhdGEgZm9yIHRoZSBOZXdhcmNoIEFpcnBvcnQsIGxvdHMgb2YgZGF0YSBlc3BlY2lhbGx5IHRlbXBlcmF0dXJlLCBodW1pZGl0eSBhbmQgZGV3cG9pbnQKYGBge3J9CnJpZW1fbmV0d29ya3MoKQpyaWVtX3N0YXRpb25zKCJOSl9BU09TIikKd2VhdGhlcl9uZXcgPC0gcmllbV9tZWFzdXJlcygiRVdSIiwgZGF0ZV9zdGFydCA9ICIyMDE3LTAxLTAxIiwgZGF0ZV9lbmQgPSAiMjAxNy0xMi0zMSIpCgpWaWV3KHdlYXRoZXJfbmV3KQoKd3JpdGVfY3N2KHdlYXRoZXJfbmV3LCdyYXdfZGF0YS93ZWF0aGVyX25ldy5jc3YnKQpWaWV3KHdlYXRoZXJfbmV3KQoKYGBgCkNsZWFuaW5nIHRoZSBkYXRhIGFuZCBmaWx0ZXJpbmcgcmVsZXZhbnQgaW5mb3JtYXRpb24KYGBge3J9CmxpYnJhcnkoamFuaXRvcikKd2VhdGhlcl9uZXcgPC0gcmVhZF9jc3YoInJhd19kYXRhL3dlYXRoZXJfbmV3LmNzdiIpCgp3ZWF0aGVyX3JlcGxhY2luZ19uYSA8LSB3ZWF0aGVyX25ldyAlPiUKICByZW5hbWUodGltZV9ob3VyID0gdmFsaWQsIHRlbXAgPSB0bXBmLCBkZXdwID0gZHdwZiwgaHVtaWQgPSByZWxoKSAlPiUKICBzZWxlY3QodGltZV9ob3VyLCB0ZW1wLCBkZXdwLCBodW1pZCkgJT4lCiAgbXV0YXRlKHRlbXAgPSByZXBsYWNlKHRlbXAsCiAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKHRlbXApLAogICAgICAgICAgICAgICAgICAgICAgICBtZWRpYW4odGVtcCwgbmEucm0gPSBUUlVFKSkpICU+JQogIG11dGF0ZShkZXdwID0gcmVwbGFjZShkZXdwLAogICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShkZXdwKSwKICAgICAgICAgICAgICAgICAgICAgICAgbWVkaWFuKGRld3AsIG5hLnJtID0gVFJVRSkpKSAlPiUKICBtdXRhdGUoaHVtaWQgPSByZXBsYWNlKGh1bWlkLAogICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShodW1pZCksCiAgICAgICAgICAgICAgICAgICAgICAgIG1lZGlhbihodW1pZCwgbmEucm0gPSBUUlVFKSkpCgpzdW1tYXJ5KHdlYXRoZXJfcmVwbGFjaW5nX25hKQpWaWV3KHdlYXRoZXJfcmVwbGFjaW5nX25hKQpkaW0od2VhdGhlcl9yZXBsYWNpbmdfbmEpCmBgYApOb3cgbGV0cyBqb2luIHRoaXMgbmV3IHdlYXRoZXIncyBkYXRhIHRvIHRoZSBvcmlnaW5hbCB3ZWF0aGVyIGRhdGFzZXQgYnkgdXNpbmcgYW4gaW5uZXJfam9pbigpIDogcmV0dXJucyBhbGwgcm93cyBmcm9tIHR3byB0YWJsZXMgd2l0aCBtYXRjaGluZyByZWNvcmRzCmBgYHtyfQp3ZWF0aGVyX25ld2Fya19jbGVhbiA8LSBpbm5lcl9qb2luKG5ld2Fya193ZWF0aGVyLCB3ZWF0aGVyX3JlcGxhY2luZ19uYSwgInRpbWVfaG91ciIpCgpWaWV3KHdlYXRoZXJfbmV3YXJrX2NsZWFuKQpgYGAKCgpgYGB7cn0Kd2VhdGhlcl9uZXdhcmQgPC0gd2VhdGhlcl9uZXdhcmtfY2xlYW4gJT4lCiAgcmVuYW1lKHRlbXAgPSB0ZW1wLnkgLCBkZXdwID0gZGV3cC55LCBodW1pZCA9IGh1bWlkLnkpICU+JQogIHNlbGVjdCggLXRlbXAueCwgLWRld3AueCwgLWh1bWlkLngpCgpzdW1tYXJ5KHdlYXRoZXJfbmV3YXJkKQpWaWV3KHdlYXRoZXJfbmV3YXJkKQpgYGAKCmBgYHtyfQpuZXdhcmtfZGF0YV90ZW1wIDwtIGxlZnRfam9pbihuZXdhcmtfZmxpZ2h0cywgd2VhdGhlcl9yZXBsYWNpbmdfbmEsICJ0aW1lX2hvdXIiKQoKCgpzdW1tYXJ5KG5ld2Fya19kYXRhX3RlbXApClZpZXcobmV3YXJrX2RhdGFfdGVtcCkKYGBgCnN1bW1hcnkobmV3YXJrX2RhdGEpClZpZXcobmV3YXJrX2RhdGEpCgp3cml0ZV9jc3YobmV3YXJrX2RhdGFfY2xlYW4sJ2NsZWFuX2RhdGEvbmV3YXJrX2RhdGFfY2xlYW4uY3N2JykKYGBgCgo=</div>
 
 
 
